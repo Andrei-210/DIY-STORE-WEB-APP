@@ -1,0 +1,243 @@
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\appsettings.Development.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\appsettings.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\DIY STORE.staticwebassets.runtime.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\DIY STORE.staticwebassets.endpoints.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\DIY STORE.exe
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\DIY STORE.deps.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\DIY STORE.runtimeconfig.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\DIY STORE.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\DIY STORE.pdb
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Azure.Core.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Azure.Identity.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Humanizer.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.Build.Framework.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.Data.SqlClient.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.Identity.Client.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.SqlServer.Server.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Microsoft.VisualStudio.SolutionPersistence.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Mono.TextTemplating.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\Newtonsoft.Json.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.ClientModel.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.CodeDom.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.Composition.AttributedModel.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.Composition.Convention.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.Composition.Hosting.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.Composition.Runtime.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.Composition.TypedParts.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.Configuration.ConfigurationManager.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.Memory.Data.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\System.Security.Cryptography.ProtectedData.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\cs\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\de\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\es\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\fr\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\it\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ja\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ko\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pl\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\pt-BR\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\ru\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\tr\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hans\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\zh-Hant\Microsoft.Data.SqlClient.resources.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\runtimes\unix\lib\net9.0\Microsoft.Data.SqlClient.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\runtimes\win\lib\net9.0\Microsoft.Data.SqlClient.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\bin\Debug\net10.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.csproj.AssemblyReference.cache
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\rpswa.dswa.cache.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.GeneratedMSBuildEditorConfig.editorconfig
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.AssemblyInfoInputs.cache
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.AssemblyInfo.cs
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.csproj.CoreCompileInputs.cache
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.MvcApplicationPartsAssemblyInfo.cache
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.RazorAssemblyInfo.cache
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.RazorAssemblyInfo.cs
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\rjimswa.dswa.cache.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\scopedcss\bundle\DIY STORE.styles.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\scopedcss\projectbundle\DIY STORE.bundle.scp.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\8wa052qayv-{0}-5vwkbxd09f-5vwkbxd09f.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\grd6fjnc77-{0}-bnpfsiz84g-bnpfsiz84g.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\5kyailp0yn-{0}-s1a5f10tvg-s1a5f10tvg.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\agcv0osjga-{0}-evri4fb56h-evri4fb56h.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\vo989hngkb-{0}-9p0qke3np8-9p0qke3np8.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\zhuv1t0z0w-{0}-asd8b2trt5-asd8b2trt5.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\2wnni36u5p-{0}-d564iar3f2-d564iar3f2.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\5poft12t0u-{0}-nxzl2eupo9-nxzl2eupo9.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\xpfkaezpg0-{0}-eg0czkvtht-eg0czkvtht.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\4ecm35csx7-{0}-x0v4abuh74-x0v4abuh74.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\vcy035dpmv-{0}-b9sayid5wm-b9sayid5wm.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\5yz5p10oxy-{0}-l254jm2tnc-l254jm2tnc.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\r1wh4jye3b-{0}-61n19gt1b8-61n19gt1b8.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\e40vwjovto-{0}-q2ophfxt4x-q2ophfxt4x.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\cudpwz7x6d-{0}-g75jafq8xw-g75jafq8xw.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\cz14lsszkx-{0}-gbyf4cp89x-gbyf4cp89x.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\c5knfzw49y-{0}-520vmnxe9p-520vmnxe9p.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\xwoe0nqga9-{0}-ffw83x8rc4-ffw83x8rc4.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\rul9f6j30q-{0}-h0aqmc87im-h0aqmc87im.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\hk2pw9g32p-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\jdzv7l0m94-{0}-bqjiyaj88i-bqjiyaj88i.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\q1nlybrcqp-{0}-c2jlpeoesf-c2jlpeoesf.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\oqxcudz4nr-{0}-erw9l3u2r3-erw9l3u2r3.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\qktugn64zn-{0}-aexeepp0ev-aexeepp0ev.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\7998wyw673-{0}-d7shbmvgxk-d7shbmvgxk.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\hdr61udk8z-{0}-ausgxo2sd3-ausgxo2sd3.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\87nwk4klz8-{0}-k8d9w2qqmf-k8d9w2qqmf.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\w5eucdw33o-{0}-cosvhxvwiu-cosvhxvwiu.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\tsimo509gc-{0}-ub07r2b239-ub07r2b239.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\rmqoz4kdp5-{0}-fvhpjtyr6v-fvhpjtyr6v.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\oifjrvnvmn-{0}-b7pk76d08c-b7pk76d08c.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\968w0dl8yx-{0}-fsbi9cje9m-fsbi9cje9m.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\pv3f2xqvmm-{0}-rzd6atqjts-rzd6atqjts.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\1fy249zlxq-{0}-ee0r1s7dh0-ee0r1s7dh0.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\8zyf35vuzd-{0}-dxx9fxp4il-dxx9fxp4il.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\ib8fzertzi-{0}-jd9uben2k1-jd9uben2k1.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\rpc1umu331-{0}-khv3u5hwcm-khv3u5hwcm.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\aw56egd41o-{0}-r4e9w2rdcm-r4e9w2rdcm.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\dqywctf087-{0}-lcd1t2u6c8-lcd1t2u6c8.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\vgbnx6ktbp-{0}-c2oey78nd0-c2oey78nd0.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\0xifea2emw-{0}-tdbxkamptv-tdbxkamptv.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\84k52bcx61-{0}-j5mq2jizvt-j5mq2jizvt.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\vzhnora4mf-{0}-06098lyss8-06098lyss8.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\gv5nlp5zns-{0}-nvvlpmu67g-nvvlpmu67g.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\knlgm8tvt9-{0}-s35ty4nyc5-s35ty4nyc5.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\8megms7znu-{0}-pj5nd1wqec-pj5nd1wqec.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\9ky4r6ruc2-{0}-46ein0sx1k-46ein0sx1k.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\em1s2ncw4c-{0}-v0zj4ognzu-v0zj4ognzu.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\yrrfo6ts67-{0}-37tfw0ft22-37tfw0ft22.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\nbarctfw10-{0}-hrwsygsryq-hrwsygsryq.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\s7klettnsq-{0}-pk9g2wxc8p-pk9g2wxc8p.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\n73l2p81v9-{0}-ft3s53vfgj-ft3s53vfgj.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\92b8wy6bg5-{0}-6cfz1n2cew-6cfz1n2cew.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\r4qcf62c7y-{0}-6pdc2jztkx-6pdc2jztkx.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\6kwsv7b43i-{0}-493y06b0oq-493y06b0oq.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\dfrkpkvfdm-{0}-iovd86k7lj-iovd86k7lj.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\33wg57y60a-{0}-vr1egmr9el-vr1egmr9el.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\iteu84lwwm-{0}-kbrnm935zg-kbrnm935zg.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\k9h0c08555-{0}-jj8uyg4cgr-jj8uyg4cgr.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\gjf49ehcyk-{0}-y7v9cxd14o-y7v9cxd14o.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\3i221elaub-{0}-notf2xhcfb-notf2xhcfb.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\prktolosb1-{0}-h1s4sie4z3-h1s4sie4z3.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\gyf1xmp8sk-{0}-63fj8s7r0e-63fj8s7r0e.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\6ozv6bo0gk-{0}-0j3bgjxly4-0j3bgjxly4.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\jsk273v9yl-{0}-47otxtyo56-47otxtyo56.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\huxsk9jxhj-{0}-4v8eqarkd7-4v8eqarkd7.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\88471f1fur-{0}-356vix0kms-356vix0kms.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\hk8by7nenk-{0}-83jwlth58m-83jwlth58m.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\fqll6llwih-{0}-mrlpezrjn3-mrlpezrjn3.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\xck2s3k5y0-{0}-lzl9nlhx6b-lzl9nlhx6b.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\4a1ppgdja5-{0}-ag7o75518u-ag7o75518u.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\y6i85ls394-{0}-x0q3zqp4vz-x0q3zqp4vz.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\e1vogkzso7-{0}-0i3buxo5is-0i3buxo5is.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\2392dwtop5-{0}-o1o13a6vjx-o1o13a6vjx.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\0kzihholbs-{0}-ttgo8qnofa-ttgo8qnofa.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\m1uv71kb1i-{0}-2z0ns9nrw6-2z0ns9nrw6.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\1p1qmffxfv-{0}-muycvpuwrr-muycvpuwrr.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\s3ekt531kl-{0}-87fc7y1x7t-87fc7y1x7t.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\2nijt6j2uw-{0}-mlv21k5csn-mlv21k5csn.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\b31ag4qci6-{0}-7mr58g0yl7-7mr58g0yl7.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\compressed\qupue7bqpb-{0}-7mr58g0yl7-7mr58g0yl7.gz
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\staticwebassets.build.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\staticwebassets.build.json.cache
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\staticwebassets.development.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\swae.build.ex.cache
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.csproj.Up2Date
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\refint\DIY STORE.dll
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.pdb
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\DIY STORE.genruntimeconfig.cache
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\obj\Debug\net10.0\ref\DIY STORE.dll

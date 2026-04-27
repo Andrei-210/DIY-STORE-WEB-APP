@@ -1,0 +1,189 @@
+:root {
+    --yellow: #ffc107;
+    --yellow-dark: #e6a800;
+    --dark: #1a1a2e;
+    --dark2: #16213e;
+    --navbar-height: 64px;
+}
+
+.navbar {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.navbar .container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* ===== BRAND ===== */
+.navbar .navbar-brand {
+    font-size: 1.7rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: white !important;
+    position: relative;
+}
+
+.navbar .navbar-brand::before {
+    content: '⚙';
+    margin-right: 8px;
+    color: var(--yellow);
+    font-size: 1.4rem;
+}
+
+.navbar .navbar-brand span {
+    color: var(--yellow);
+}
+
+/* ===== SEARCH BAR ===== */
+.navbar .d-flex.align-items-center > form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    height: 40px;
+    flex-grow: 1;
+    max-width: 420px;
+}
+
+.navbar .form-control {
+    height: 40px;
+    padding: 0 16px;
+    font-size: 0.9rem;
+    border-radius: 50px 0 0 50px;
+    border: 2px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    max-width: 340px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.navbar .form-control::placeholder {
+    color: rgba(255,255,255,0.45);
+}
+
+.navbar .form-control:focus {
+    box-shadow: none;
+    border-color: var(--yellow);
+    background: rgba(255,255,255,0.12);
+    outline: none;
+    color: white;
+}
+
+.navbar .d-flex.align-items-center > form .btn {
+    height: 40px;
+    border-radius: 0 50px 50px 0;
+    background: var(--yellow);
+    border: none;
+    color: #1a1a2e;
+    font-weight: 700;
+    padding: 0 18px;
+    transition: all 0.3s ease;
+}
+
+.navbar .d-flex.align-items-center > form .btn:hover {
+    background: var(--yellow-dark);
+}
+
+/* ===== BUTOANE RAND 1 ===== */
+.navbar .btn-outline-light {
+    height: 40px;
+    padding: 0 14px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 50px;
+    border: 2px solid rgba(255,255,255,0.25);
+    color: white;
+    background: transparent;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-decoration: none;
+}
+
+.navbar .btn-outline-light:hover {
+    background: var(--yellow);
+    color: #1a1a2e;
+    border-color: var(--yellow);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255,193,7,0.35);
+}
+
+/* ===== DROPDOWN ===== */
+.navbar .dropdown-menu {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    padding: 0.5rem;
+    background: #1a1a2e;
+    margin-top: 8px;
+}
+
+.navbar .dropdown-item {
+    color: rgba(255,255,255,0.85);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.navbar .dropdown-item:hover {
+    background: var(--yellow);
+    color: #1a1a2e;
+    font-weight: 700;
+}
+
+.navbar .dropdown-divider {
+    border-color: rgba(255,255,255,0.1);
+}
+
+/* ===== RAND 2 - MENIU PRINCIPAL ===== */
+.navbar > .container:last-child {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    justify-content: start;
+    gap: 4px;
+}
+
+.navbar > .container:last-child .btn {
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.8);
+    border: none;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.navbar > .container:last-child .btn:hover {
+    background: rgba(255,193,7,0.15);
+    color: var(--yellow);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .navbar .form-control {
+        width: 100%;
+        border-radius: 50px 0 0 50px;
+        margin-bottom: 0;
+    }
+
+    .navbar .d-flex.align-items-center {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .navbar > .container:last-child {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+}

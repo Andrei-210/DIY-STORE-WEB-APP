@@ -1,0 +1,119 @@
+:root {
+    --yellow: #ffc107;
+    --dark: #1a1a2e;
+    --gray-bg: #f4f4f8;
+    --card-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-section {
+    padding: 5rem 0;
+    background: var(--gray-bg);
+}
+
+.about-section h1 {
+    font-weight: 900;
+    font-size: 2.8rem;
+    color: var(--dark);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 14px;
+}
+
+.about-section h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 4px;
+    background: var(--yellow);
+    border-radius: 2px;
+}
+
+.about-section h2 {
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 1.2rem;
+}
+
+.about-section p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.about-section .img-fluid {
+    border-radius: var(--card-radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    transition: var(--transition);
+}
+
+.about-section .img-fluid:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+}
+
+/* ===== TIMELINE ===== */
+.history-timeline {
+    border-left: 4px solid var(--yellow);
+    padding-left: 2rem;
+    margin-top: 2rem;
+    position: relative;
+}
+
+.history-event {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-left: 1rem;
+    background: white;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: var(--transition);
+}
+
+.history-event:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.history-event::before {
+    content: '';
+    position: absolute;
+    left: -2.6rem;
+    top: 1.2rem;
+    width: 20px;
+    height: 20px;
+    background: var(--yellow);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--yellow);
+}
+
+.history-event h5 {
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.history-event p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+/* ===== WHY CHOOSE US ===== */
+.about-section .text-center {
+    background: white;
+    border-radius: var(--card-radius);
+    padding: 3rem 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+
+@media (max-width: 767px) {
+    .history-event::before {
+        left: -2.4rem;
+    }
+}

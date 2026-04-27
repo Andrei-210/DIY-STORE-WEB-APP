@@ -1,0 +1,73 @@
+@model DIY_STORE.ViewModels.CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/cart.css">
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Checkout</h2>
+
+    <div class="row g-4">
+        <div class="col-md-7">
+            <div class="card shadow-sm p-4">
+                <h5 class="mb-3">Delivery Details</h5>
+                <form asp-controller="Cart" asp-action="PlaceOrder" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="FullName"
+                               value="@Model.FullName" required>
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-control" name="Address"
+                               value="@Model.Address" required>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-control" name="Phone"
+                               value="@Model.Phone" required>
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Payment Method</label>
+                        <select class="form-select" name="PaymentMethod">
+                            <option value="card" selected="@(Model.PaymentMethod == "card" ? "selected" : null)">Card</option>
+                            <option value="paypal" selected="@(Model.PaymentMethod == "paypal" ? "selected" : null)">PayPal</option>
+                            <option value="cash" selected="@(Model.PaymentMethod == "cash" ? "selected" : null)">Cash on delivery</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100 btn-lg">Place Order</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow-sm p-4">
+                <h5 class="mb-3">Order Summary</h5>
+                @foreach (var item in Model.Cart.Items)
+                {
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>@item.Name <span class="text-muted">x@(item.Quantity)</span></span>
+                        <span>@item.Subtotal.ToString("0.00") RON</span>
+                    </div>
+                }
+                <hr>
+                <div class="d-flex justify-content-between fw-bold fs-5">
+                    <span>Total</span>
+                    <span class="text-warning">@Model.Cart.Total.ToString("0.00") RON</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

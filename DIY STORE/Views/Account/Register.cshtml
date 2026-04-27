@@ -1,0 +1,54 @@
+@model DIY_STORE.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/login.css">
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-sm p-4">
+                <h3 class="text-center mb-4">Create Account</h3>
+
+                <form asp-controller="Account" asp-action="Register" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input asp-for="Username" class="form-control" required>
+                        <span asp-validation-for="Username" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" required>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <input asp-for="Address" class="form-control" required>
+                        <span asp-validation-for="Address" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input asp-for="Password" class="form-control" required>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning w-100">Register</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <small>Already have an account?
+                        <a asp-controller="Account" asp-action="Login">Log in</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+@model DIY_STORE.Models.ContactMessage
+@{ ViewData["Title"] = "Message Details"; }
+
+<div class="container py-5" style="max-width:700px;">
+    <div class="card shadow-sm p-4">
+        <h4>✉️ @Model.Subject</h4>
+        <dl class="row mt-3">
+            <dt class="col-3">From</dt><dd class="col-9">@Model.Name (@Model.Email)</dd>
+            <dt class="col-3">Date</dt><dd class="col-9">@Model.Date.ToString("dd MMM yyyy HH:mm")</dd>
+        </dl>
+        <hr>
+        <p>@Model.Message</p>
+        <div class="d-flex gap-2 mt-3">
+            <a href="mailto:@Model.Email" class="btn btn-warning">Reply via Email</a>
+            <a asp-action="Messages" class="btn btn-outline-secondary">← Back</a>
+        </div>
+    </div>
+</div>

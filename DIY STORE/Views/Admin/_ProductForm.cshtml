@@ -1,0 +1,155 @@
+@model DIY_STORE.Models.Product
+@{
+    var categories = ViewData["Categories"] as IEnumerable<DIY_STORE.Models.Category>
+                     ?? Enumerable.Empty<DIY_STORE.Models.Category>();
+    var shops = ViewBag.Shops as IEnumerable<DIY_STORE.Models.Shop> ?? Enumerable.Empty<DIY_STORE.Models.Shop>();
+    var existingAvail = ViewBag.ExistingAvailabilities as List<DIY_STORE.Models.ProductShopAvailability>
+                        ?? new List<DIY_STORE.Models.ProductShopAvailability>();
+}
+
+<div class="mb-3">
+    <label asp-for="Name" class="form-label">Name</label>
+    <input asp-for="Name" class="form-control" required>
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Description" class="form-label">Description</label>
+    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col">
+        <label asp-for="Price" class="form-label">Price (RON)</label>
+        <input asp-for="Price" class="form-control" type="number" step="0.01" required>
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="col">
+        <label asp-for="OldPrice" class="form-label">Old Price (RON)</label>
+        <input asp-for="OldPrice" class="form-control" type="number" step="0.01">
+    </div>
+    <div class="col">
+        <label asp-for="Stock" class="form-label">Stock</label>
+        <input asp-for="Stock" class="form-control" type="number" required>
+        <span asp-validation-for="Stock" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="SubcategoryId" class="form-label">Subcategory</label>
+    <select asp-for="SubcategoryId" class="form-select" required>
+        <option value="">– Select subcategory –</option>
+        @foreach (var cat in categories)
+        {
+            <optgroup label="@cat.Name">
+                @foreach (var sub in (cat.Subcategories ?? Enumerable.Empty<DIY_STORE.Models.Subcategory>()))
+                {
+                    if (Model != null && Model.SubcategoryId == sub.Id)
+                    {
+                        <option value="@sub.Id" selected="selected">@sub.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@sub.Id">@sub.Name</option>
+                    }
+                }
+            </optgroup>
+        }
+    </select>
+    <span asp-validation-for="SubcategoryId" class="text-danger"></span>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col">
+        <label asp-for="ManufacturerName" class="form-label">Manufacturer Name</label>
+        <input asp-for="ManufacturerName" class="form-control">
+    </div>
+    <div class="col">
+        <label asp-for="ManufacturerLogo" class="form-label">Manufacturer Logo filename</label>
+        <input asp-for="ManufacturerLogo" class="form-control" placeholder="e.g. bosch.png">
+    </div>
+</div>
+
+<!-- Imagini produs -->
+<div class="mb-3">
+    <label class="form-label fw-semibold">Product Images</label>
+    <div id="image-fields">
+        <div class="input-group mb-2">
+            <span class="input-group-text">📷 1</span>
+            <input type="text" name="ImagePaths" class="form-control" placeholder="e.g. drill-front.webp">
+            <span class="input-group-text text-muted small">filename from wwwroot/images/</span>
+        </div>
+    </div>
+    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="addImageField()">+ Add another image</button>
+    <div class="form-text">Adaugă numele fișierului imaginii (ex: drill.webp). Pune fișierul în <code>wwwroot/images/</code>.</div>
+</div>
+
+<div class="form-check mb-3">
+    <input asp-for="IsOnSale" class="form-check-input" type="checkbox">
+    <label asp-for="IsOnSale" class="form-check-label">On Sale</label>
+</div>
+
+<!-- Disponibilitate magazine -->
+@if (shops.Any())
+{
+    <div class="mb-3">
+        <label class="form-label fw-semibold">🏪 Store Availability</label>
+        <div class="card border p-3">
+            <div class="form-text mb-2">Selectează în ce magazine este disponibil produsul și dacă este în stoc.</div>
+            @foreach (var shop in shops)
+            {
+                var avail = existingAvail.FirstOrDefault(a => a.ShopId == shop.Id);
+                bool isAvailable = avail != null;
+                bool shopInStock = avail?.InStock ?? true;
+                <div class="d-flex align-items-center gap-3 py-2 border-bottom">
+                    <div class="form-check flex-fill">
+                        <input class="form-check-input shop-check" type="checkbox"
+                               id="shop-@shop.Id"
+                               data-shop-id="@shop.Id"
+                               @(isAvailable ? "checked" : "")
+                               onchange="toggleShopRow(@shop.Id)">
+                        <label class="form-check-label" for="shop-@shop.Id">
+                            <strong>@shop.City</strong> — <span class="text-muted small">@shop.Address</span>
+                        </label>
+                    </div>
+                    <div id="shop-stock-row-@shop.Id" class="d-flex align-items-center gap-2" style="@(isAvailable ? "" : "display:none!important;")">
+                        <input type="hidden" name="ShopIds" value="@shop.Id" id="shop-hidden-@shop.Id" @(isAvailable ? "" : "disabled")>
+                        <div class="form-check form-check-inline mb-0">
+                            <input class="form-check-input" type="checkbox"
+                                   name="ShopInStocks" value="true"
+                                   id="stock-@shop.Id"
+                                   @(shopInStock ? "checked" : "")>
+                            <label class="form-check-label text-success small fw-semibold" for="stock-@shop.Id">In Stock</label>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<script>
+    let imgCount = 1;
+    function addImageField() {
+        imgCount++;
+        const div = document.createElement('div');
+        div.className = 'input-group mb-2';
+        div.innerHTML = `<span class="input-group-text">📷 ${imgCount}</span>
+            <input type="text" name="ImagePaths" class="form-control" placeholder="e.g. product-${imgCount}.webp">
+            <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">✕</button>`;
+        document.getElementById('image-fields').appendChild(div);
+    }
+
+    function toggleShopRow(shopId) {
+        const chk = document.getElementById(`shop-${shopId}`);
+        const row = document.getElementById(`shop-stock-row-${shopId}`);
+        const hidden = document.getElementById(`shop-hidden-${shopId}`);
+        if (chk.checked) {
+            row.style.removeProperty('display');
+            if (hidden) hidden.disabled = false;
+        } else {
+            row.style.display = 'none';
+            if (hidden) hidden.disabled = true;
+        }
+    }
+</script>

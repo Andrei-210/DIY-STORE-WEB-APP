@@ -1,0 +1,199 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFramework = net10.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.RootNamespace = DIY_STORE
+build_property.RootNamespace = DIY_STORE
+build_property.ProjectDir = D:\Andrei\Proiecte\DIY STORE\DIY STORE\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Andrei\Proiecte\DIY STORE\DIY STORE
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Account/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Account/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/Categories.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ2F0ZWdvcmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/CreateCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlQ2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/CreateProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlUHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/CreateSubcategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlU3ViY2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/DeleteCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlQ2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/DeleteProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlUHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/DeleteSubcategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlU3ViY2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/EditCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdENhdGVnb3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/EditProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdFByb2R1Y3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/EditSubcategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdFN1YmNhdGVnb3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/MessageDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWVzc2FnZURldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/Messages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWVzc2FnZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/Products.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUHJvZHVjdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Admin/_ProductForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1Byb2R1Y3RGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Cart/Checkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxDaGVja291dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Cart/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Cart/OrderConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxPcmRlckNvbmZpcm1hdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Categories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Home/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Home/Contact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Products/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Products/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shared/_Footer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shared/_Navbar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OYXZiYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shops/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hvcHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shops/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hvcHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shops/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hvcHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shops/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hvcHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shops/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hvcHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Support/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcG9ydFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Andrei/Proiecte/DIY STORE/DIY STORE/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-rbhphs94yy

@@ -1,0 +1,90 @@
+@{
+    ViewData["Title"] = "Customer Support";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/customer_support.css">
+}
+
+<div class="container mt-5 mb-5">
+    <h1 class="mb-4 text-center">Customer Support</h1>
+
+    <!-- Mesaj confirmare -->
+    @if (TempData["SupportSuccess"] != null)
+    {
+        <div class="alert alert-success text-center">@TempData["SupportSuccess"]</div>
+    }
+
+    <!-- Formular de contact -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-warning text-black">
+            Send us a message
+        </div>
+        <div class="card-body">
+            <form asp-controller="Support" asp-action="SendMessage" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" name="Name" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="Email" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" name="Subject" id="subject" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" name="Message" id="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-warning w-100">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <h2 class="mb-3">Frequently Asked Questions</h2>
+    <div class="accordion mb-5" id="faqAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                    How can I place an order?
+                </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    To place an order, go to your desired category, select a product, and click "Add to cart".
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                    What payment methods are accepted?
+                </button>
+            </h2>
+            <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    We accept card payments, PayPal, and cash on delivery.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item mb-5">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                    How can I return a product?
+                </button>
+            </h2>
+            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    You can return a product within 14 days of receiving it, according to our return policy.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

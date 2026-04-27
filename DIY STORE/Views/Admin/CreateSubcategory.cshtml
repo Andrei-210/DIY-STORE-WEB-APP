@@ -1,0 +1,38 @@
+@model DIY_STORE.Models.Subcategory
+@{
+    ViewData["Title"] = "Create Subcategory";
+    var categories = ViewBag.Categories as IEnumerable<DIY_STORE.Models.Category>
+                     ?? Enumerable.Empty<DIY_STORE.Models.Category>();
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">➕ Create Subcategory</h2>
+    <div class="card shadow-sm p-4" style="max-width:500px;">
+        <form asp-action="CreateSubcategory" method="post">
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label asp-for="CategoryId" class="form-label">Parent Category</label>
+                <select asp-for="CategoryId" class="form-select" required>
+                    <option value="">– Select category –</option>
+                    @foreach (var cat in categories)
+                    {
+                        <option value="@cat.Id">@cat.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Subcategory Name</label>
+                <input asp-for="Name" class="form-control" required>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Image" class="form-label">Image (optional)</label>
+                <input asp-for="Image" class="form-control" placeholder="e.g. electric-saw.png">
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Create Subcategory</button>
+        </form>
+    </div>
+    <a asp-action="Categories" class="btn btn-outline-secondary mt-3">← Back</a>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

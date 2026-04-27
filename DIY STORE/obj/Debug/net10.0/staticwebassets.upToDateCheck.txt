@@ -1,0 +1,187 @@
+wwwroot\css\about.css
+wwwroot\css\cart.css
+wwwroot\css\contact.css
+wwwroot\css\customer_support.css
+wwwroot\css\footer.css
+wwwroot\css\navbar.css
+wwwroot\css\product.css
+wwwroot\css\products.css
+wwwroot\css\profile.css
+wwwroot\css\shops.css
+wwwroot\css\site.css
+wwwroot\css\style.css
+wwwroot\favicon.ico
+wwwroot\images\about_team.jpg
+wwwroot\images\about_tools.jpg
+wwwroot\images\brick.webp
+wwwroot\images\brush.webp
+wwwroot\images\cable.webp
+wwwroot\images\cement.jpg
+wwwroot\images\chiuveta.webp
+wwwroot\images\drill.webp
+wwwroot\images\firma_hammer_pro.webp
+wwwroot\images\grinders.webp
+wwwroot\images\hammer.jpg
+wwwroot\images\hoses.jpg
+wwwroot\images\insulation.jpg
+wwwroot\images\pipe.jpg
+wwwroot\images\plier.webp
+wwwroot\images\pot.jpg
+wwwroot\images\roller.jpg
+wwwroot\images\Sanders.jpg
+wwwroot\images\saws.jpg
+wwwroot\images\screwdriver.jpg
+wwwroot\images\seed.webp
+wwwroot\images\shop_placeholder.webp
+wwwroot\images\shovel.webp
+wwwroot\images\switch.webp
+wwwroot\images\varnish.webp
+wwwroot\images\wall paint.webp
+wwwroot\images\wood.jpg
+wwwroot\images\wrenche.webp
+wwwroot\js\cart.js
+wwwroot\js\categories.js
+wwwroot\js\navbar.js
+wwwroot\js\product.js
+wwwroot\js\products.js
+wwwroot\js\profile.js
+wwwroot\js\site.js
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
+wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
+wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
+wwwroot\lib\bootstrap\LICENSE
+wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js
+wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
+wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
+wwwroot\lib\jquery-validation\dist\additional-methods.js
+wwwroot\lib\jquery-validation\dist\additional-methods.min.js
+wwwroot\lib\jquery-validation\dist\jquery.validate.js
+wwwroot\lib\jquery-validation\dist\jquery.validate.min.js
+wwwroot\lib\jquery-validation\LICENSE.md
+wwwroot\lib\jquery\dist\jquery.js
+wwwroot\lib\jquery\dist\jquery.min.js
+wwwroot\lib\jquery\dist\jquery.min.map
+wwwroot\lib\jquery\dist\jquery.slim.js
+wwwroot\lib\jquery\dist\jquery.slim.min.js
+wwwroot\lib\jquery\dist\jquery.slim.min.map
+wwwroot\lib\jquery\LICENSE.txt
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\additional-methods.min.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\site.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\profile.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\products.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\product.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\navbar.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\categories.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\cart.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\favicon.ico
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\style.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\site.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\shops.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\profile.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\products.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\product.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\navbar.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\footer.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\customer_support.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\contact.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\cart.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\about.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\jquery.validate.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\LICENSE.md
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.min.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.min.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.slim.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.slim.min.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.slim.min.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\LICENSE.txt
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\additional-methods.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js

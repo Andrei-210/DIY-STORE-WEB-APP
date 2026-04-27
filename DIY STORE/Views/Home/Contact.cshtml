@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "Contact";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/contact.css">
+}
+
+<section class="contact-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Contact Us</h2>
+
+        @* Afiseaza mesajul de succes daca exista in TempData *@
+        @if (TempData["ContactSuccess"] != null)
+        {
+            <div class="alert alert-success text-center">@TempData["ContactSuccess"]</div>
+        }
+
+        <div class="row g-5">
+            <!-- Informatii Contact -->
+            <div class="col-md-5">
+                <div class="contact-info p-4">
+                    <h4>Head Office</h4>
+                    <p><strong>Address:</strong><br>Strada Exemplu 15,<br>București, România</p>
+                    <p><strong>Phone:</strong><br>031 234 5678</p>
+                    <p><strong>Email:</strong><br>contact@diystore.ro</p>
+                    <p><strong>Working Hours:</strong><br>Monday - Sunday: 09:00 - 20:00</p>
+                </div>
+            </div>
+
+            <!-- Formular Contact -->
+            <div class="col-md-7">
+                <div class="contact-form p-4">
+                    <h4>Send us a message</h4>
+                    <form asp-controller="Home" asp-action="Contact" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" name="Name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" name="Email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <input type="text" class="form-control" name="Subject" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control" name="Message" rows="4" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Harta -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4 class="text-center mb-3">Our Location</h4>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps?q=Bucuresti&output=embed"
+                            width="100%"
+                            height="350"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

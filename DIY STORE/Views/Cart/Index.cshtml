@@ -1,0 +1,81 @@
+@model DIY_STORE.ViewModels.CartViewModel
+@{
+    ViewData["Title"] = "Cart";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/cart.css">
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Your Cart</h2>
+
+    @if (TempData["CartMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["CartMessage"]</div>
+    }
+
+    @if (!Model.Items.Any())
+    {
+        <div class="text-center py-5">
+            <p class="text-muted fs-5">Your cart is empty.</p>
+            <a asp-controller="Products" asp-action="Index" class="btn btn-warning mt-2">Shop Now</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="~/images/@item.ImageUrl.Replace("images/","")"
+                                         style="width:60px;height:60px;object-fit:contain;" alt="@item.Name">
+                                    <a asp-controller="Products" asp-action="Details"
+                                       asp-route-id="@item.ProductId">@item.Name</a>
+                                </div>
+                            </td>
+                            <td>@item.Price.ToString("0.00") RON</td>
+                            <td>
+                                <form asp-controller="Cart" asp-action="UpdateQuantity" method="post" class="d-flex gap-1">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="productId" value="@item.ProductId">
+                                    <input type="number" name="quantity" value="@item.Quantity" min="1"
+                                           class="form-control form-control-sm" style="width:70px;"
+                                           onchange="this.form.submit()">
+                                </form>
+                            </td>
+                            <td class="fw-bold">@item.Subtotal.ToString("0.00") RON</td>
+                            <td>
+                                <form asp-controller="Cart" asp-action="Remove" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="productId" value="@item.ProductId">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <h4>Total: <span class="text-warning">@Model.Total.ToString("0.00") RON</span></h4>
+            <a asp-controller="Cart" asp-action="Checkout" class="btn btn-warning btn-lg">
+                Checkout →
+            </a>
+        </div>
+    }
+</div>

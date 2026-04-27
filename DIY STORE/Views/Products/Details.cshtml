@@ -1,0 +1,480 @@
+@model DIY_STORE.Models.Product
+@{
+    ViewData["Title"] = Model.Name;
+    var similarProducts = ViewBag.SimilarProducts as IEnumerable<DIY_STORE.Models.Product> ?? Enumerable.Empty<DIY_STORE.Models.Product>();
+    var shopAvailabilities = ViewBag.ShopAvailabilities as List<(DIY_STORE.Models.Shop shop, bool inStock)> ?? new List<(DIY_STORE.Models.Shop, bool)>();
+    bool isFavorite = ViewBag.IsFavorite == true;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/product.css">
+    <style>
+        .product-detail-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,.09);
+            overflow: hidden;
+        }
+        .product-gallery {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        /* Carousel arrows at center of image, visible */
+        #productCarousel .carousel-control-prev,
+        #productCarousel .carousel-control-next {
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            opacity: 1;
+            position: absolute;
+        }
+        #productCarousel .carousel-control-prev { left: 8px; }
+        #productCarousel .carousel-control-next { right: 8px; }
+        #productCarousel .carousel-control-prev-icon,
+        #productCarousel .carousel-control-next-icon { width: 16px; height: 16px; }
+        .price-tag { font-size: 2rem; font-weight: 700; color: #f5a623; }
+        .old-price { font-size: 1.1rem; text-decoration: line-through; color: #aaa; }
+        .stock-badge { font-size: 0.9rem; font-weight: 600; padding: 5px 14px; border-radius: 20px; display: inline-block; }
+        .stock-badge.in { background: #d4edda; color: #155724; }
+        .stock-badge.out { background: #f8d7da; color: #721c24; }
+        .fav-btn-detail {
+            border: 2px solid #dee2e6;
+            border-radius: 50%;
+            width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+            background: white;
+            cursor: pointer;
+            transition: all .2s;
+            flex-shrink: 0;
+        }
+        .fav-btn-detail:hover { border-color: #dc3545; }
+        .fav-btn-detail.active { background: #dc3545; border-color: #dc3545; color: white; }
+        .fav-btn-detail:not(.active) { color: #dc3545; }
+        .spec-table th { background: #f8f9fa; font-weight: 600; width: 40%; }
+        .shop-availability-card {
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .similar-card { transition: transform .2s, box-shadow .2s; }
+        .similar-card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+        .section-divider { border-top: 2px solid #f0f0f0; margin: 2.5rem 0; }
+    </style>
+}
+
+<!-- Toast container -->
+<div id="toast-container" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
+
+<section class="py-5" style="background:#fafafa;min-height:80vh;">
+    <div class="container">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item">
+                    <a asp-controller="Categories" asp-action="Index"
+                       asp-route-cat="@Model.Subcategory?.Category?.Slug">
+                        @Model.Subcategory?.Category?.Name
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-controller="Products" asp-action="Index"
+                       asp-route-cat="@Model.Subcategory?.Category?.Slug"
+                       asp-route-sub="@Model.Subcategory?.Name">
+                        @Model.Subcategory?.Name
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">@Model.Name</li>
+            </ol>
+        </nav>
+
+        <!-- Main product card -->
+        <div class="product-detail-card bg-white p-4 p-md-5 mb-4">
+            <div class="row g-5">
+
+                <!-- LEFT: Gallery + Manufacturer -->
+                <div class="col-md-5">
+                    <div class="product-gallery">
+                        @if (Model.Images.Any())
+                        {
+                            <div id="productCarousel" class="carousel slide" data-bs-ride="false">
+                                <div class="carousel-inner">
+                                    @{ bool first = true; }
+                                    @foreach (var img in Model.Images)
+                                    {
+                                        <div class="carousel-item @(first ? "active" : "")">
+                                            <img src="~/images/@img.ImagePath.Replace("images/","")"
+                                                 class="d-block w-100"
+                                                 style="max-height:380px;object-fit:contain;"
+                                                 alt="@Model.Name">
+                                        </div>
+                                        first = false;
+                                    }
+                                </div>
+                                @if (Model.Images.Count > 1)
+                                {
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <img src="~/images/placeholder.webp" class="img-fluid d-block mx-auto"
+                                 style="max-height:380px;object-fit:contain;" alt="@Model.Name">
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ManufacturerName))
+                    {
+                        <div class="mt-3 d-flex align-items-center gap-3 bg-light rounded px-3 py-2">
+                            @if (!string.IsNullOrEmpty(Model.ManufacturerLogo))
+                            {
+                                <img src="~/images/@Model.ManufacturerLogo" alt="@Model.ManufacturerName"
+                                     style="width:48px;height:48px;object-fit:contain;">
+                            }
+                            <div>
+                                <div class="text-muted small">Manufacturer</div>
+                                <div class="fw-bold">@Model.ManufacturerName</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- RIGHT: Details + Actions -->
+                <div class="col-md-7 d-flex flex-column">
+
+                    <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                        <div>
+                            <p class="text-muted small mb-1">
+                                <a asp-controller="Categories" asp-action="Index"
+                                   asp-route-cat="@Model.Subcategory?.Category?.Slug"
+                                   class="text-decoration-none text-muted">@Model.Subcategory?.Category?.Name</a>
+                                &rsaquo;
+                                <a asp-controller="Products" asp-action="Index"
+                                   asp-route-cat="@Model.Subcategory?.Category?.Slug"
+                                   asp-route-sub="@Model.Subcategory?.Name"
+                                   class="text-decoration-none text-muted">@Model.Subcategory?.Name</a>
+                            </p>
+                            <h1 class="h3 fw-bold mb-0">@Model.Name</h1>
+                            <p class="text-muted small mt-1">Code: #@Model.Id</p>
+                        </div>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <button id="fav-btn-detail"
+                                    class="fav-btn-detail @(isFavorite ? "active" : "")"
+                                    title="@(isFavorite ? "Remove from favorites" : "Add to favorites")"
+                                    onclick="toggleFavoriteDetail(@Model.Id)">❤</button>
+                        }
+                    </div>
+
+                    <!-- Price -->
+                    <div class="d-flex align-items-center gap-3 my-3">
+                        <div>
+                            @if (Model.OldPrice.HasValue)
+                            {
+                                <span class="old-price d-block">@Model.OldPrice.Value.ToString("0.00") RON</span>
+                            }
+                            <span class="price-tag">@Model.Price.ToString("0.00") RON</span>
+                        </div>
+                        @if (Model.IsOnSale && Model.OldPrice.HasValue && Model.OldPrice > 0)
+                        {
+                            var discount = (int)Math.Round((1 - Model.Price / Model.OldPrice.Value) * 100);
+                            <span class="badge bg-danger fs-6 px-3 py-2">-@discount%</span>
+                        }
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="mb-3">
+                        <span class="stock-badge @(Model.Stock > 0 ? "in" : "out")">
+                            @(Model.Stock > 0 ? $"✓ In stock ({Model.Stock} available)" : "✗ Out of stock")
+                        </span>
+                    </div>
+
+                    <!-- Add to Cart -->
+                    @if (Model.Stock > 0)
+                    {
+                        <div class="d-flex gap-2 align-items-center mb-4">
+                            <div class="input-group" style="max-width:120px;">
+                                <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQty(-1)">−</button>
+                                <input type="number" id="qty-input" value="1" min="1" max="@Model.Stock"
+                                       class="form-control form-control-sm text-center" style="border-left:0;border-right:0;">
+                                <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQty(1)">+</button>
+                            </div>
+                            <button class="btn btn-warning btn-lg px-4 fw-semibold flex-fill"
+                                    onclick="addToCartDetail(@Model.Id, '@Model.Name.Replace("'","\\'")')">
+                                🛒 Add to Cart
+                            </button>
+                        </div>
+                    }
+
+                    <!-- Specifications preview (top 4) -->
+                    @if (Model.Specifications.Any())
+                    {
+                        <div class="bg-light rounded p-3 mb-3">
+                            <h6 class="fw-bold mb-2">Quick Specs</h6>
+                            <div class="row g-1">
+                                @foreach (var spec in Model.Specifications.Take(4))
+                                {
+                                    <div class="col-6 small"><span class="text-muted">@spec.SpecKey:</span> <strong>@spec.SpecValue</strong></div>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Shop Availability -->
+        @{
+            var allShopsRaw = ViewBag.AllShops as List<DIY_STORE.Models.Shop>;
+            var availDict = ViewBag.AvailDict as Dictionary<int, bool>;
+        }
+        @if (allShopsRaw != null && allShopsRaw.Any())
+        {
+            <div class="bg-white rounded-4 shadow-sm p-4 mb-4">
+                <h4 class="fw-bold mb-3">🏪 Available in Physical Stores</h4>
+                <div class="row g-3">
+                    @foreach (var shop in allShopsRaw)
+                    {
+                        bool inStock = availDict != null && availDict.ContainsKey(shop.Id) && availDict[shop.Id];
+                        <div class="col-md-6 col-lg-4">
+                            <div class="shop-availability-card">
+                                <div>
+                                    <div class="fw-semibold">@shop.City</div>
+                                    <div class="text-muted small">@shop.Address</div>
+                                    @if (!string.IsNullOrEmpty(shop.Phone))
+                                    {
+                                        <div class="text-muted small">📞 @shop.Phone</div>
+                                    }
+                                </div>
+                                <span class="badge @(inStock ? "bg-success" : "bg-secondary") rounded-pill px-3 py-2">
+                                    @(inStock ? "In Stock" : "Unavailable")
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Description -->
+        <div class="bg-white rounded-4 shadow-sm p-4 mb-4">
+            <h4 class="fw-bold mb-3">Description</h4>
+            <p class="text-secondary lh-lg">@Model.Description</p>
+
+            @if (Model.Specifications.Any())
+            {
+                <div class="section-divider"></div>
+                <h5 class="fw-bold mb-3">Full Specifications</h5>
+                <table class="table table-bordered spec-table w-auto">
+                    @foreach (var spec in Model.Specifications)
+                    {
+                        <tr>
+                            <th>@spec.SpecKey</th>
+                            <td>@spec.SpecValue</td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+
+        <!-- Similar Products -->
+        @if (similarProducts.Any())
+        {
+            <div class="bg-white rounded-4 shadow-sm p-4 mb-4">
+                <h4 class="fw-bold mb-4">Similar Products</h4>
+                <div class="row g-4">
+                    @foreach (var p in similarProducts)
+                    {
+                        var img2 = p.Images.FirstOrDefault()?.ImagePath ?? "images/placeholder.webp";
+                        <div class="col-6 col-md-3">
+                            <div class="card shadow-sm h-100 text-center similar-card border-0">
+                                @if (p.IsOnSale)
+                                {
+                                    <span class="badge bg-danger position-absolute top-0 end-0 m-2" style="z-index:2;font-size:.7rem;">SALE</span>
+                                }
+                                <img src="~/images/@img2.Replace("images/","")" class="card-img-top p-2"
+                                     style="max-height:160px;object-fit:contain;" alt="@p.Name">
+                                <div class="card-body d-flex flex-column pt-0">
+                                    <h6 class="card-title small fw-semibold">@p.Name</h6>
+                                    <p class="text-warning fw-bold mb-2">@p.Price.ToString("0.00") RON</p>
+                                    <div class="d-flex gap-1 mt-auto">
+                                        <a asp-controller="Products" asp-action="Details" asp-route-id="@p.Id"
+                                           class="btn btn-outline-warning btn-sm flex-fill">View</a>
+                                        <button class="btn btn-warning btn-sm add-to-cart-btn"
+                                                data-product-id="@p.Id"
+                                                data-product-name="@p.Name"
+                                                data-product-price="@p.Price"
+                                                data-product-image="images/@img2.Replace("images/","")">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Reviews -->
+        <div class="bg-white rounded-4 shadow-sm p-4 mb-4">
+            <h4 class="fw-bold mb-4">Reviews (@Model.Reviews.Count)</h4>
+            @if (TempData["ReviewSuccess"] != null)
+            {
+                <div class="alert alert-success">@TempData["ReviewSuccess"]</div>
+            }
+            @if (!Model.Reviews.Any())
+            {
+                <p class="text-muted">No reviews yet. Be the first!</p>
+            }
+            <div class="row g-3 mb-4">
+                @foreach (var review in Model.Reviews)
+                {
+                    <div class="col-12">
+                        <div class="card border-0 bg-light rounded-3 p-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <strong>@review.User?.UserName</strong>
+                                    <div class="text-warning my-1">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <span>@(i <= review.Rating ? "★" : "☆")</span>
+                                        }
+                                    </div>
+                                    <strong class="small">@review.Title</strong>
+                                    <p class="mb-0 text-secondary small">@review.Comment</p>
+                                </div>
+                                <span class="text-muted small">@review.Date.ToString("dd MMM yyyy")</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <div class="border-top pt-4">
+                    <h5 class="fw-bold mb-3">Write a Review</h5>
+                    <form asp-controller="Products" asp-action="AddReview" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="ProductId" value="@Model.Id" />
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">Rating</label>
+                                <select name="Rating" class="form-select">
+                                    @for (int i = 5; i >= 1; i--)
+                                    {
+                                        <option value="@i">@i ★</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-9">
+                                <label class="form-label fw-semibold">Title</label>
+                                <input type="text" name="Title" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Comment</label>
+                                <textarea name="Comment" class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-warning px-4">Submit Review</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/cart.js"></script>
+    @using Microsoft.AspNetCore.Antiforgery
+    @inject IAntiforgery Antiforgery
+    @{ var tokens = Antiforgery.GetAndStoreTokens(Context); }
+    <input type="hidden" name="__RequestVerificationToken" value="@tokens.RequestToken" id="global-csrf-token">
+
+    <script>
+        function getToken() {
+            return document.getElementById('global-csrf-token')?.value || '';
+        }
+
+        function showToast(msg, type = "success") {
+            const c = document.getElementById("toast-container");
+            const t = document.createElement("div");
+            t.className = `alert alert-${type} shadow mb-0`;
+            t.style.cssText = "min-width:280px;animation:fadeIn .3s;";
+            t.textContent = msg;
+            c.appendChild(t);
+            setTimeout(() => { t.style.opacity = 0; t.style.transition = "opacity .4s"; }, 2800);
+            setTimeout(() => t.remove(), 3200);
+        }
+
+        function changeQty(delta) {
+            const input = document.getElementById('qty-input');
+            const val = parseInt(input.value) + delta;
+            const max = parseInt(input.max);
+            if (val >= 1 && val <= max) input.value = val;
+        }
+
+        async function addToCartDetail(productId, productName) {
+            const qty = document.getElementById('qty-input')?.value || 1;
+            const tok = getToken();
+            try {
+                const r = await fetch('/Cart/Add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+                    body: `productId=${productId}&quantity=${qty}&__RequestVerificationToken=${encodeURIComponent(tok)}`
+                });
+                if (r.ok) {
+                    showToast(`🛒 "${productName}" added to cart!`, 'success');
+                    try {
+                        const data = await r.json();
+                        const badge = document.getElementById('cart-count');
+                        if (badge && data.count !== undefined) badge.textContent = data.count;
+                    } catch {}
+                } else {
+                    showToast('Error adding to cart.', 'danger');
+                }
+            } catch { showToast('Connection error.', 'danger'); }
+        }
+
+        async function toggleFavoriteDetail(productId) {
+            const btn = document.getElementById('fav-btn-detail');
+            const tok = getToken();
+            if (!tok) { window.location = '/Account/Login'; return; }
+            try {
+                const r = await fetch('/Products/ToggleFavorite', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+                    body: `productId=${productId}&__RequestVerificationToken=${encodeURIComponent(tok)}`
+                });
+                const d = await r.json();
+                if (d.success) {
+                    btn.classList.toggle('active', d.isFavorite);
+                    btn.title = d.isFavorite ? 'Remove from favorites' : 'Add to favorites';
+                    showToast(d.isFavorite ? '❤ Added to favorites!' : '💔 Removed from favorites!', d.isFavorite ? 'success' : 'warning');
+                }
+            } catch { showToast('Error. Please try again.', 'danger'); }
+        }
+    </script>
+    <style>@@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }</style>
+}

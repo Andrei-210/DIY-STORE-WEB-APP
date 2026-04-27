@@ -1,0 +1,30 @@
+@model DIY_STORE.Models.Category
+@{ ViewData["Title"] = "Create Category"; }
+
+<div class="container py-5">
+    <h2 class="mb-4">➕ Create Category</h2>
+    <div class="card shadow-sm p-4" style="max-width:500px;">
+        <form asp-action="CreateCategory" method="post">
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" required>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Slug" class="form-label"></label>
+                <input asp-for="Slug" class="form-control" placeholder="e.g. power-tools" required>
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Image" class="form-label">Category Image Path</label>
+                <input asp-for="Image" class="form-control" placeholder="e.g. categories/power-tools.jpg">
+                <div class="form-text">Enter the image filename relative to wwwroot/images/</div>
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Create</button>
+        </form>
+    </div>
+    <a asp-action="Categories" class="btn btn-outline-secondary mt-3">← Back</a>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

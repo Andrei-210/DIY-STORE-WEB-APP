@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">⚙️ Admin Dashboard</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <a asp-action="Products" class="text-decoration-none">
+                <div class="card text-center shadow-sm p-4 h-100 border-warning">
+                    <div class="display-4">📦</div>
+                    <h5 class="mt-2">Products</h5>
+                    <small class="text-muted">Create, edit, delete products</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-action="Categories" class="text-decoration-none">
+                <div class="card text-center shadow-sm p-4 h-100 border-warning">
+                    <div class="display-4">🗂️</div>
+                    <h5 class="mt-2">Categories</h5>
+                    <small class="text-muted">Manage categories</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-controller="Shops" asp-action="Index" class="text-decoration-none">
+                <div class="card text-center shadow-sm p-4 h-100 border-warning">
+                    <div class="display-4">🏪</div>
+                    <h5 class="mt-2">Shops</h5>
+                    <small class="text-muted">Manage physical stores</small>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-action="Messages" class="text-decoration-none">
+                <div class="card text-center shadow-sm p-4 h-100 border-warning">
+                    <div class="display-4">✉️</div>
+                    <h5 class="mt-2">Messages</h5>
+                    <small class="text-muted">Support messages</small>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

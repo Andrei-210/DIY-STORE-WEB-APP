@@ -1,0 +1,200 @@
+:root {
+    --yellow: #ffc107;
+    --yellow-dark: #e6a800;
+    --dark: #1a1a2e;
+    --gray-bg: #f4f4f8;
+    --card-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-section {
+    background: var(--gray-bg);
+    padding-bottom: 5rem;
+}
+
+/* ===== TITLU PRODUS ===== */
+#productTitle {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+#productCode {
+    font-size: 0.88rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+#productCategory {
+    display: inline-block;
+    background: var(--gray-bg);
+    color: var(--dark);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.2rem;
+    border: 2px solid #e0e0e0;
+}
+
+/* ===== PRET ===== */
+.product-prices {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    background: white;
+    border-radius: var(--card-radius);
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+#oldPrice {
+    font-size: 1rem;
+    color: #aaa;
+    text-decoration: line-through;
+    display: block;
+}
+
+#productPrice {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--dark);
+    display: block;
+    line-height: 1;
+}
+
+#discountPercent {
+    background: #ff4757 !important;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 700;
+    align-self: center;
+}
+
+/* ===== BUTON COS ===== */
+#addToCartBtn,
+button[type="submit"].btn-warning {
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    padding: 0.8rem 2.5rem !important;
+    background: var(--yellow) !important;
+    border: none !important;
+    color: var(--dark) !important;
+    transition: var(--transition) !important;
+    box-shadow: 0 6px 20px rgba(255,193,7,0.35) !important;
+    margin-bottom: 1.5rem;
+}
+
+#addToCartBtn:hover,
+button[type="submit"].btn-warning:hover {
+    background: var(--yellow-dark) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 30px rgba(255,193,7,0.45) !important;
+}
+
+/* ===== ORAS DISPONIBILITATE ===== */
+#cityInput {
+    max-width: 300px;
+    border-radius: 50px !important;
+    border: 2px solid #e0e0e0 !important;
+    padding: 0.5rem 1rem !important;
+    transition: var(--transition);
+}
+
+#cityInput:focus {
+    border-color: var(--yellow) !important;
+    box-shadow: 0 0 0 3px rgba(255,193,7,0.15) !important;
+}
+
+#availabilityText {
+    display: block;
+    margin-top: 0.5rem;
+    font-weight: 600;
+}
+
+/* ===== PRODUCATOR ===== */
+#manufacturerLogo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: white;
+    padding: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#manufacturerName {
+    font-weight: 800;
+    color: var(--dark);
+}
+
+/* ===== SECTIUNI SIMILARE / RECENTE ===== */
+.similar-products,
+.recent-products,
+.Description,
+.product-specs {
+    background: white;
+    border-radius: var(--card-radius);
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.similar-products h4,
+.recent-products h4,
+.Description h4,
+.product-specs h5 {
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 3px solid var(--yellow);
+    display: inline-block;
+}
+
+#productSpecs {
+    list-style: none;
+    padding: 0;
+}
+
+#productSpecs li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+#productSpecs li:last-child {
+    border-bottom: none;
+}
+
+/* ===== CAROUSEL ===== */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 767px) {
+    #productTitle { font-size: 1.5rem; }
+    #productPrice { font-size: 1.6rem; }
+}

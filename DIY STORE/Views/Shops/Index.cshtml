@@ -1,0 +1,58 @@
+@model IEnumerable<DIY_STORE.Models.Shop>
+@{
+    ViewData["Title"] = "Shops";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/shops.css">
+}
+
+<section class="shops-section py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Our Stores in Romania</h2>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="Create" class="btn btn-warning">+ Add Shop</a>
+            }
+        </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        <div class="row g-4">
+            @foreach (var shop in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card h-100 shop-card">
+                        <img src="~/images/shop_placeholder.webp" class="card-img-top" alt="Shop @shop.City">
+                        <div class="card-body">
+                            <h5 class="card-title">@shop.City</h5>
+                            <p><strong>Address:</strong> @shop.Address</p>
+                            <p><strong>Hours:</strong> @shop.Hours</p>
+                            <p><strong>Phone:</strong> @shop.Phone</p>
+                            <p><strong>Email:</strong> <a href="mailto:@shop.Email">@shop.Email</a></p>
+                        </div>
+                        <div class="card-footer d-flex gap-2">
+                            <a asp-action="Details" asp-route-id="@shop.Id" class="btn btn-outline-dark btn-sm">Details</a>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@shop.Id" class="btn btn-warning btn-sm">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@shop.Id" class="btn btn-danger btn-sm">Delete</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (!Model.Any())
+            {
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No shops found.</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>

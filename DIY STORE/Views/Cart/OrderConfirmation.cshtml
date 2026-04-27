@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "Order Confirmed";
+    int orderId = ViewBag.OrderId ?? 0;
+    string fullName = ViewBag.FullName ?? "";
+    string paymentMethod = ViewBag.PaymentMethod ?? "";
+    string total = ViewBag.Total ?? "0.00";
+}
+
+<div class="container py-5" style="min-height:70vh;">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <!-- Header banner -->
+                <div class="text-center py-5 px-4" style="background:linear-gradient(135deg,#ffc107,#ff9800);">
+                    <div style="font-size:4rem;line-height:1;">✅</div>
+                    <h2 class="fw-bold text-white mt-3 mb-1">Order Confirmed!</h2>
+                    <p class="text-white mb-0" style="opacity:.9;">Thank you for your purchase.</p>
+                </div>
+
+                <!-- Order details -->
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <span class="badge bg-warning text-dark fs-6 px-3 py-2 rounded-pill">
+                            Order #@orderId
+                        </span>
+                    </div>
+
+                    <div class="list-group list-group-flush rounded-3 mb-4">
+                        <div class="list-group-item d-flex justify-content-between px-0">
+                            <span class="text-muted">Name</span>
+                            <strong>@fullName</strong>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between px-0">
+                            <span class="text-muted">Payment method</span>
+                            <strong>@paymentMethod</strong>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between px-0">
+                            <span class="text-muted">Total paid</span>
+                            <strong class="text-warning fs-5">@total RON</strong>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between px-0">
+                            <span class="text-muted">Status</span>
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        </div>
+                    </div>
+
+                    <p class="text-muted text-center small mb-4">
+                        You will receive a confirmation on your registered email shortly. You can also view your order in
+                        <a asp-controller="Account" asp-action="Profile" asp-route-section="orders">My Account</a>.
+                    </p>
+
+                    <!-- Countdown -->
+                    <div class="text-center">
+                        <p class="text-muted small mb-2">Redirecting to home in <strong id="countdown">10</strong> seconds...</p>
+                        <div class="progress" style="height:4px;border-radius:2px;">
+                            <div id="progress-bar" class="progress-bar bg-warning" style="width:100%;transition:width 1s linear;"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-warning btn-lg rounded-pill fw-semibold">
+                            🏠 Back to Home
+                        </a>
+                        <a asp-controller="Account" asp-action="Profile" asp-route-section="orders"
+                           class="btn btn-outline-secondary rounded-pill">
+                            📦 View My Orders
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let seconds = 10;
+        const countdown = document.getElementById('countdown');
+        const bar = document.getElementById('progress-bar');
+
+        const timer = setInterval(() => {
+            seconds--;
+            countdown.textContent = seconds;
+            bar.style.width = (seconds * 10) + '%';
+            if (seconds <= 0) {
+                clearInterval(timer);
+                window.location.href = '/';
+            }
+        }, 1000);
+    </script>
+}

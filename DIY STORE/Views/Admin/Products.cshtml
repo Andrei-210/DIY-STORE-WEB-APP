@@ -1,0 +1,50 @@
+@model List<DIY_STORE.Models.Product>
+@{
+    ViewData["Title"] = "Admin – Products";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📦 Manage Products</h2>
+        <a asp-action="CreateProduct" class="btn btn-warning">+ Add Product</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
+                    <th>On Sale</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Name</td>
+                        <td>@p.Price.ToString("0.00") RON</td>
+                        <td>@p.Stock</td>
+                        <td>@p.Subcategory?.Category?.Name / @p.Subcategory?.Name</td>
+                        <td>@(p.IsOnSale ? "✅" : "—")</td>
+                        <td>
+                            <a asp-action="EditProduct" asp-route-id="@p.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="DeleteProduct" asp-route-id="@p.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <a asp-action="Index" class="btn btn-outline-secondary mt-2">← Back to Dashboard</a>
+</div>

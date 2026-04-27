@@ -1,0 +1,96 @@
+:root {
+    --yellow: #ffc107;
+    --yellow-dark: #e6a800;
+    --dark: #1a1a2e;
+    --gray-bg: #f4f4f8;
+    --card-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--gray-bg);
+}
+
+#main-wrapper {
+    flex: 1 0 auto;
+}
+
+#footer-placeholder {
+    flex-shrink: 0;
+}
+
+/* ===== SIDEBAR ===== */
+.profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profile-sidebar .btn {
+    width: 100%;
+    text-align: left;
+    padding: 0.8rem 1.2rem;
+    color: var(--dark);
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    text-decoration: none;
+    display: block;
+}
+
+.profile-sidebar .btn:hover {
+    border-color: var(--yellow);
+    background: #fffdf0;
+    transform: translateX(4px);
+}
+
+.profile-sidebar .btn.active {
+    background: linear-gradient(90deg, var(--yellow) 0%, #ffcd38 100%);
+    color: var(--dark);
+    font-weight: 800;
+    border-color: var(--yellow);
+    box-shadow: 0 4px 15px rgba(255,193,7,0.3);
+}
+
+/* ===== CARD CONTINUT ===== */
+.card {
+    border: none !important;
+    border-radius: var(--card-radius) !important;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08) !important;
+}
+
+.card .p-4 {
+    padding: 2rem !important;
+}
+
+/* ===== LIST GROUP ===== */
+.list-group-item {
+    cursor: pointer;
+    border-radius: 10px !important;
+    margin-bottom: 0.3rem;
+    border: 1px solid #f0f0f0 !important;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.list-group-item:hover {
+    background: #fffdf0;
+}
+
+.list-group-item.active {
+    background: var(--yellow) !important;
+    border-color: var(--yellow) !important;
+    color: var(--dark) !important;
+    font-weight: 700 !important;
+}

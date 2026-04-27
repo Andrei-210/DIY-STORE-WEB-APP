@@ -1,0 +1,206 @@
+:root {
+    --yellow: #ffc107;
+    --yellow-dark: #e6a800;
+    --dark: #1a1a2e;
+    --gray-bg: #f4f4f8;
+    --card-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.products-section {
+    background: var(--gray-bg);
+    flex: 1 0 auto;
+    padding-bottom: 5rem;
+}
+
+#footer-placeholder {
+    flex-shrink: 0;
+}
+
+/* ===== TITLU ===== */
+#titluCategorie,
+#categoryTitle {
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: var(--dark);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 12px;
+}
+
+#titluCategorie::after,
+#categoryTitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 4px;
+    background: var(--yellow);
+    border-radius: 2px;
+}
+
+/* ===== FILTRU ===== */
+.products-section .form-control,
+.products-section .form-select {
+    border-radius: 50px;
+    border: 2px solid #e0e0e0;
+    padding: 0.4rem 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.products-section .form-control:focus,
+.products-section .form-select:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(255,193,7,0.15);
+}
+
+.products-section .btn-outline-primary {
+    border-radius: 50px;
+    border: 2px solid var(--dark);
+    color: var(--dark);
+    font-weight: 700;
+    padding: 0.4rem 1.2rem;
+    transition: var(--transition);
+}
+
+.products-section .btn-outline-primary:hover {
+    background: var(--dark);
+    color: white;
+}
+
+/* ===== CARDS PRODUSE ===== */
+.product-card {
+    border: none !important;
+    border-radius: var(--card-radius) !important;
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    background: white;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.13);
+}
+
+.product-card .card-img-top {
+    height: 200px;
+    object-fit: contain;
+    padding: 1.5rem;
+    background: var(--gray-bg);
+    transition: var(--transition);
+}
+
+.product-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.product-card .card-body {
+    padding: 1.2rem;
+}
+
+.product-card h6 {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.product-card .fw-bold.text-warning {
+    font-size: 1.2rem;
+    font-weight: 800 !important;
+    color: var(--dark) !important;
+}
+
+.text-decoration-line-through {
+    color: #aaa !important;
+    font-size: 0.85rem;
+}
+
+/* ===== BUTOANE ===== */
+.btn-warning {
+    background: var(--yellow) !important;
+    border: none !important;
+    color: var(--dark) !important;
+    font-weight: 700 !important;
+    border-radius: 50px !important;
+    transition: var(--transition) !important;
+}
+
+.btn-warning:hover {
+    background: var(--yellow-dark) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 15px rgba(255,193,7,0.4) !important;
+}
+
+.btn-outline-danger {
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    border-width: 2px !important;
+    transition: var(--transition) !important;
+}
+
+/* ===== PAGINARE ===== */
+.pagination .page-link {
+    color: var(--dark);
+    border-radius: 50px !important;
+    margin: 0 3px;
+    border: 2px solid #e0e0e0;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.pagination .page-link:hover {
+    background: var(--yellow-light);
+    border-color: var(--yellow);
+    color: var(--dark);
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--dark);
+    box-shadow: 0 4px 12px rgba(255,193,7,0.3);
+}
+
+/* ===== CAROUSEL ===== */
+.carousel-item img {
+    height: 200px;
+    object-fit: contain;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 36px;
+    height: 36px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.clickable-card {
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .product-card h6 { font-size: 0.85rem; }
+}

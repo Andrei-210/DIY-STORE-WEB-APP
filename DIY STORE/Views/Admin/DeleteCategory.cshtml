@@ -1,0 +1,16 @@
+@model DIY_STORE.Models.Category
+@{ ViewData["Title"] = "Delete Category"; }
+
+<div class="container py-5" style="max-width:500px;">
+    <div class="card shadow-sm border-danger p-4">
+        <h3 class="text-danger">🗑️ Delete Category</h3>
+        <p>Delete <strong>@Model.Name</strong> (slug: <code>@Model.Slug</code>)?</p>
+        <p class="text-warning"><strong>Warning:</strong> All subcategories and products will also be deleted!</p>
+        <form asp-action="DeleteCategory" method="post" class="d-flex gap-2">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a asp-action="Categories" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+@model DIY_STORE.Models.Product
+@{
+    ViewData["Title"] = "Edit Product";
+    var categories = ViewBag.Categories as IEnumerable<DIY_STORE.Models.Category>
+                     ?? Enumerable.Empty<DIY_STORE.Models.Category>();
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">✏️ Edit Product: @Model.Name</h2>
+    <div class="card shadow-sm p-4" style="max-width:700px;">
+        <form asp-action="EditProduct" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            @{
+                var partialViewData = new ViewDataDictionary(ViewData);
+                partialViewData["Categories"] = categories;
+            }
+            @await Html.PartialAsync("_ProductForm", Model, partialViewData)
+            <button type="submit" class="btn btn-warning w-100 mt-3">Save Changes</button>
+        </form>
+    </div>
+    <a asp-action="Products" class="btn btn-outline-secondary mt-3">← Back</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,136 @@
+:root {
+    --yellow: #ffc107;
+    --yellow-dark: #e6a800;
+    --dark: #1a1a2e;
+    --gray-bg: #f4f4f8;
+    --card-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--gray-bg);
+}
+
+#main-wrapper {
+    flex: 1 0 auto;
+}
+
+#footer-placeholder {
+    margin-top: auto;
+}
+
+/* ===== TITLU ===== */
+.container h2 {
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: var(--dark);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.container h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 4px;
+    background: var(--yellow);
+    border-radius: 2px;
+}
+
+/* ===== TABEL ===== */
+table {
+    background: white;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+
+table th {
+    background: var(--dark) !important;
+    color: white !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    padding: 1rem 1.2rem !important;
+    border: none !important;
+}
+
+table td {
+    vertical-align: middle !important;
+    padding: 1rem 1.2rem !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    color: #444;
+}
+
+table tr:last-child td {
+    border-bottom: none !important;
+}
+
+table tr:hover td {
+    background: #fffdf0;
+}
+
+img.product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: var(--gray-bg);
+    padding: 4px;
+}
+
+.quantity-input {
+    width: 70px;
+    border-radius: 50px !important;
+    border: 2px solid #e0e0e0 !important;
+    text-align: center;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.quantity-input:focus {
+    border-color: var(--yellow) !important;
+    box-shadow: 0 0 0 3px rgba(255,193,7,0.15) !important;
+}
+
+/* ===== TOTAL ===== */
+.container h4 {
+    font-weight: 800;
+    color: var(--dark);
+    font-size: 1.4rem;
+}
+
+.container h4 span {
+    color: var(--yellow-dark);
+    font-size: 1.6rem;
+}
+
+/* ===== CHECKOUT BTN ===== */
+.btn-warning {
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    padding: 0.7rem 2rem !important;
+    background: var(--yellow) !important;
+    border: none !important;
+    color: var(--dark) !important;
+    font-size: 1rem !important;
+    transition: var(--transition) !important;
+    box-shadow: 0 4px 15px rgba(255,193,7,0.3) !important;
+}
+
+.btn-warning:hover {
+    background: var(--yellow-dark) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(255,193,7,0.4) !important;
+}

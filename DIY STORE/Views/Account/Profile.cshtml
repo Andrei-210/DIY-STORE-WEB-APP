@@ -1,0 +1,205 @@
+@model DIY_STORE.ViewModels.ProfileViewModel
+@using Microsoft.AspNetCore.Antiforgery
+@inject IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Profile";
+    var tokens = Antiforgery.GetAndStoreTokens(Context);
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css">
+}
+
+<!-- Toast container -->
+<div id="toast-container" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 mb-4">
+            <div class="list-group shadow-sm">
+                <a asp-controller="Account" asp-action="Profile" asp-route-section="account"
+                   class="list-group-item list-group-item-action @(Model.ActiveSection == "account" ? "active" : "")">
+                    👤 Account Info
+                </a>
+                <a asp-controller="Account" asp-action="Profile" asp-route-section="orders"
+                   class="list-group-item list-group-item-action @(Model.ActiveSection == "orders" ? "active" : "")">
+                    📦 Order History
+                </a>
+                <a asp-controller="Account" asp-action="Profile" asp-route-section="favorites"
+                   class="list-group-item list-group-item-action @(Model.ActiveSection == "favorites" ? "active" : "")">
+                    ❤ Favorites
+                </a>
+            </div>
+
+            <form asp-controller="Account" asp-action="Logout" method="post" class="mt-3">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline-danger w-100">Logout</button>
+            </form>
+        </div>
+
+        <!-- Content -->
+        <div class="col-md-9">
+            <div class="card shadow-sm p-4">
+
+                @if (TempData["OrderSuccess"] != null)
+                {
+                    <div class="alert alert-success">@TempData["OrderSuccess"]</div>
+                }
+
+                @if (Model.ActiveSection == "account")
+                {
+                    <h4 class="mb-4">Account Information</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">Username</dt>
+                        <dd class="col-sm-9">@Model.UserName</dd>
+
+                        <dt class="col-sm-3">Email</dt>
+                        <dd class="col-sm-9">@Model.Email</dd>
+
+                        <dt class="col-sm-3">Address</dt>
+                        <dd class="col-sm-9">@(string.IsNullOrEmpty(Model.Address) ? "Not set" : Model.Address)</dd>
+                    </dl>
+                }
+
+                @if (Model.ActiveSection == "orders")
+                {
+                    <h4 class="mb-4">Order History</h4>
+                    @if (!Model.Orders.Any())
+                    {
+                        <p class="text-muted">You have no orders yet.</p>
+                        <a asp-controller="Products" asp-action="Index" class="btn btn-warning">Start Shopping</a>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var order in Model.Orders)
+                                    {
+                                        <tr>
+                                            <td>@order.Id</td>
+                                            <td>@order.Date.ToString("dd MMM yyyy")</td>
+                                            <td>
+                                                <span class="badge @(order.Status == "Pending" ? "bg-warning text-dark" : "bg-success")">
+                                                    @order.Status
+                                                </span>
+                                            </td>
+                                            <td>@order.OrderItems.Count items</td>
+                                            <td class="fw-bold">@order.TotalAmount.ToString("0.00") RON</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                }
+
+                @if (Model.ActiveSection == "favorites")
+                {
+                    <h4 class="mb-4">❤ My Favorites</h4>
+                    @if (!Model.Favorites.Any())
+                    {
+                        <p class="text-muted">You have no favorite products yet.</p>
+                        <a asp-controller="Products" asp-action="Index" class="btn btn-warning">Browse Products</a>
+                    }
+                    else
+                    {
+                        <input type="hidden" id="global-csrf-token" value="@tokens.RequestToken">
+
+                        <div class="row g-3">
+                            @foreach (var fav in Model.Favorites)
+                            {
+                                var img = fav.Product?.Images.FirstOrDefault()?.ImagePath ?? "images/placeholder.webp";
+                                var firstImg = img.Replace("images/", "");
+                                <div class="col-md-4" id="fav-card-@fav.ProductId">
+                                    <div class="card shadow-sm h-100 text-center">
+                                        <img src="~/images/@firstImg"
+                                             class="card-img-top p-2"
+                                             style="max-height:150px;object-fit:contain;"
+                                             alt="@fav.Product?.Name">
+                                        <div class="card-body d-flex flex-column">
+                                            <h6>@fav.Product?.Name</h6>
+                                            <p class="text-warning fw-bold">@fav.Product?.Price.ToString("0.00") RON</p>
+                                            <div class="d-flex gap-1 mt-auto">
+                                                <!-- Inimioară plină - scoate din favorite -->
+                                                <button class="btn btn-outline-danger btn-sm"
+                                                        title="Remove from favorites"
+                                                        onclick="removeFavorite(@fav.ProductId, this)">❤</button>
+                                                <!-- View -->
+                                                <a asp-controller="Products" asp-action="Details"
+                                                   asp-route-id="@fav.ProductId"
+                                                   class="btn btn-outline-secondary btn-sm flex-fill">View</a>
+                                                <!-- Add to Cart -->
+                                                <button class="btn btn-warning btn-sm add-to-cart-btn"
+                                                        data-product-id="@fav.ProductId"
+                                                        data-product-name="@fav.Product?.Name"
+                                                        data-product-price="@fav.Product?.Price"
+                                                        data-product-image="images/@firstImg">
+                                                    🛒
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.ActiveSection == "favorites" && Model.Favorites.Any())
+{
+    @section Scripts {
+        <script src="~/js/cart.js"></script>
+        <script>
+            function getToken() {
+                return document.getElementById('global-csrf-token')?.value || '';
+            }
+
+            function showToast(msg, type = "success") {
+                const c = document.getElementById("toast-container");
+                const t = document.createElement("div");
+                t.className = `alert alert-${type} shadow mb-0`;
+                t.style.cssText = "min-width:280px;animation:fadeIn .3s;";
+                t.textContent = msg;
+                c.appendChild(t);
+                setTimeout(() => { t.style.opacity = 0; t.style.transition = "opacity .4s"; }, 2800);
+                setTimeout(() => t.remove(), 3200);
+            }
+
+            async function removeFavorite(productId, btn) {
+                const tok = getToken();
+                try {
+                    const r = await fetch('/Products/ToggleFavorite', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+                        body: `productId=${productId}&__RequestVerificationToken=${encodeURIComponent(tok)}`
+                    });
+                    const d = await r.json();
+                    if (d.success && !d.isFavorite) {
+                        const card = document.getElementById(`fav-card-${productId}`);
+                        card.style.transition = 'opacity .4s';
+                        card.style.opacity = '0';
+                        setTimeout(() => card.remove(), 400);
+                        showToast('💔 Removed from favorites!', 'warning');
+                    }
+                } catch { showToast('Error. Please try again.', 'danger'); }
+            }
+        </script>
+        <style>@@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }</style>
+    }
+}
