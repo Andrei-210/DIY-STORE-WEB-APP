@@ -4,7 +4,7 @@
 <div class="container py-5">
     <h2 class="mb-4">➕ Create Category</h2>
     <div class="card shadow-sm p-4" style="max-width:500px;">
-        <form asp-action="CreateCategory" method="post">
+        <form asp-action="CreateCategory" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <div class="mb-3">
                 <label asp-for="Name" class="form-label"></label>
@@ -17,10 +17,9 @@
                 <span asp-validation-for="Slug" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Image" class="form-label">Category Image Path</label>
-                <input asp-for="Image" class="form-control" placeholder="e.g. categories/power-tools.jpg">
-                <div class="form-text">Enter the image filename relative to wwwroot/images/</div>
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label class="form-label">Category Image</label>
+                <input type="file" name="ImageFile" class="form-control" accept="image/*">
+                <div class="form-text">Upload an image from your computer.</div>
             </div>
             <button type="submit" class="btn btn-warning w-100">Create</button>
         </form>

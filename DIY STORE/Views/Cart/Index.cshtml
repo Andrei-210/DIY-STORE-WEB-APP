@@ -15,6 +15,11 @@
         <div class="alert alert-success">@TempData["CartMessage"]</div>
     }
 
+    @if (TempData["CartError"] != null)
+    {
+        <div class="alert alert-danger">⚠️ @TempData["CartError"]</div>
+    }
+
     @if (!Model.Items.Any())
     {
         <div class="text-center py-5">
@@ -43,18 +48,34 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <img src="~/images/@item.ImageUrl.Replace("images/","")"
                                          style="width:60px;height:60px;object-fit:contain;" alt="@item.Name">
-                                    <a asp-controller="Products" asp-action="Details"
-                                       asp-route-id="@item.ProductId">@item.Name</a>
+                                    <div>
+                                        <a asp-controller="Products" asp-action="Details"
+                                           asp-route-slug="@item.ProductSlug">@item.Name</a>
+                                        @if (item.Stock == 0)
+                                        {
+                                            <div class="text-danger small mt-1">⚠️ Out of stock — please remove</div>
+                                        }
+                                        else if (item.Quantity >= item.Stock)
+                                        {
+                                            <div class="text-warning small mt-1">Max stock: @item.Stock</div>
+                                        }
+                                    </div>
                                 </div>
                             </td>
                             <td>@item.Price.ToString("0.00") RON</td>
                             <td>
-                                <form asp-controller="Cart" asp-action="UpdateQuantity" method="post" class="d-flex gap-1">
+                                <form asp-controller="Cart" asp-action="UpdateQuantity" method="post" class="d-flex gap-1 align-items-center">
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" name="productId" value="@item.ProductId">
-                                    <input type="number" name="quantity" value="@item.Quantity" min="1"
-                                           class="form-control form-control-sm" style="width:70px;"
+                                    <input type="number" name="quantity" value="@item.Quantity"
+                                           min="1" max="@(item.Stock > 0 ? item.Stock : 1)"
+                                           class="form-control form-control-sm @(item.Stock == 0 ? "border-danger" : "")"
+                                           style="width:70px;"
                                            onchange="this.form.submit()">
+                                    @if (item.Stock > 0)
+                                    {
+                                        <small class="text-muted">/&nbsp;@item.Stock</small>
+                                    }
                                 </form>
                             </td>
                             <td class="fw-bold">@item.Subtotal.ToString("0.00") RON</td>

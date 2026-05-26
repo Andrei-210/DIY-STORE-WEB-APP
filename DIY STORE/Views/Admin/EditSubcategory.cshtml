@@ -8,7 +8,7 @@
 <div class="container py-5">
     <h2 class="mb-4">✏️ Edit Subcategory: @Model.Name</h2>
     <div class="card shadow-sm p-4" style="max-width:500px;">
-        <form asp-action="EditSubcategory" method="post">
+        <form asp-action="EditSubcategory" asp-route-slug="@Model.Slug" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <input type="hidden" asp-for="Id" />
             <div class="mb-3">
@@ -28,8 +28,18 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Image" class="form-label">Image (optional)</label>
-                <input asp-for="Image" class="form-control" placeholder="e.g. electric-saw.png">
+                <label class="form-label">Image (optional)</label>
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <div class="mb-2 d-flex align-items-center gap-2">
+                        <img src="~/images/@Model.Image" alt="@Model.Name"
+                             style="max-height:60px;max-width:80px;object-fit:contain;border:1px solid #dee2e6;border-radius:4px;padding:2px;">
+                        <small class="text-muted">Current: @Model.Image</small>
+                    </div>
+                    <input type="hidden" asp-for="Image" />
+                }
+                <input type="file" name="ImageFile" class="form-control" accept="image/*">
+                <div class="form-text">Upload a new image (leave empty to keep existing).</div>
             </div>
             <button type="submit" class="btn btn-warning w-100">Save Changes</button>
         </form>

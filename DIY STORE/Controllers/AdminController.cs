@@ -1,9 +1,8 @@
 using DIY_STORE.Models;
+using DIY_STORE.Repositories;
 using DIY_STORE.Services;
-using DIY_STORE.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DIY_STORE.Controllers
 {
@@ -15,26 +14,42 @@ namespace DIY_STORE.Controllers
         private readonly ISupportService _supportService;
         private readonly ISubcategoryService _subcategoryService;
         private readonly IShopService _shopService;
-        private readonly ApplicationDbContext _db;
+        private readonly IProductShopAvailabilityRepository _shopAvailRepo;
+        private readonly IWebHostEnvironment _env;
 
-        public AdminController(IProductService productService,
+        public AdminController(
+            IProductService productService,
             ICategoryService categoryService,
             ISupportService supportService,
             ISubcategoryService subcategoryService,
             IShopService shopService,
-            ApplicationDbContext db)
+            IProductShopAvailabilityRepository shopAvailRepo,
+            IWebHostEnvironment env)
         {
             _productService = productService;
             _categoryService = categoryService;
             _supportService = supportService;
             _subcategoryService = subcategoryService;
             _shopService = shopService;
-            _db = db;
+            _shopAvailRepo = shopAvailRepo;
+            _env = env;
+        }
+
+        private async Task<string?> SaveUploadedFileAsync(IFormFile? file, string subfolder)
+        {
+            if (file == null || file.Length == 0) return null;
+            var dir = Path.Combine(_env.WebRootPath, "images", subfolder);
+            Directory.CreateDirectory(dir);
+            var fileName = Path.GetFileName(file.FileName);
+            var filePath = Path.Combine(dir, fileName);
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await file.CopyToAsync(stream);
+            return $"{subfolder}/{fileName}";
         }
 
         public IActionResult Index() => View();
 
-        // ── PRODUCTS CRUD ──────────────────────────────────────────────────────
+        // ── PRODUCTS ──────────────────────────────────────────────────────────
         public async Task<IActionResult> Products()
         {
             var vm = await _productService.GetProductsAsync(null, null, null, null, 1, 100);
@@ -50,7 +65,9 @@ namespace DIY_STORE.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateProduct(Product product, List<string>? ImagePaths,
+        public async Task<IActionResult> CreateProduct(Product product,
+            List<IFormFile>? ImageFiles,
+            IFormFile? ManufacturerLogoFile,
             List<int>? ShopIds, List<bool>? ShopInStocks)
         {
             if (!ModelState.IsValid)
@@ -60,167 +77,180 @@ namespace DIY_STORE.Controllers
                 return View(product);
             }
 
-            if (ImagePaths != null)
+            if (ManufacturerLogoFile != null && ManufacturerLogoFile.Length > 0)
+            {
+                var logoPath = await SaveUploadedFileAsync(ManufacturerLogoFile, "manufacturers");
+                if (logoPath != null) product.ManufacturerLogo = logoPath;
+            }
+
+            if (ImageFiles != null)
             {
                 bool firstImg = true;
-                foreach (var path in ImagePaths.Where(p => !string.IsNullOrWhiteSpace(p)))
+                foreach (var file in ImageFiles.Where(f => f != null && f.Length > 0))
                 {
-                    product.Images.Add(new ProductImage { ImagePath = path.Trim(), IsMain = firstImg });
-                    firstImg = false;
+                    var path = await SaveUploadedFileAsync(file, "products");
+                    if (path != null)
+                    {
+                        product.Images.Add(new ProductImage { ImagePath = path, IsMain = firstImg });
+                        firstImg = false;
+                    }
                 }
             }
 
             await _productService.CreateProductAsync(product);
 
-            // Save shop availabilities
-            if (ShopIds != null)
+            if (ShopIds != null && ShopIds.Any())
             {
-                for (int i = 0; i < ShopIds.Count; i++)
-                {
-                    _db.ProductShopAvailabilities.Add(new ProductShopAvailability
-                    {
-                        ProductId = product.Id,
-                        ShopId = ShopIds[i],
-                        InStock = ShopInStocks != null && i < ShopInStocks.Count && ShopInStocks[i]
-                    });
-                }
-                await _db.SaveChangesAsync();
+                var availabilities = ShopIds.Select((shopId, i) =>
+                    (shopId, ShopInStocks != null && i < ShopInStocks.Count && ShopInStocks[i])
+                ).ToList();
+                await _shopAvailRepo.SetAvailabilitiesAsync(product.Id, availabilities);
             }
 
             TempData["Success"] = $"✅ Product \"{product.Name}\" created!";
             return RedirectToAction(nameof(Products));
         }
 
-        public async Task<IActionResult> EditProduct(int id)
+        public async Task<IActionResult> EditProduct(string slug)
         {
-            var product = await _productService.GetProductDetailAsync(id);
+            var product = await _productService.GetProductBySlugAsync(slug);
             if (product == null) return NotFound();
             ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
             ViewBag.Shops = await _shopService.GetAllShopsAsync();
-            ViewBag.ExistingAvailabilities = await _db.ProductShopAvailabilities
-                .Where(a => a.ProductId == id).ToListAsync();
+            ViewBag.ExistingAvailabilities = await _shopAvailRepo.GetByProductIdAsync(product.Id);
             return View(product);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProduct(int id, Product product, List<string>? ImagePaths,
+        public async Task<IActionResult> EditProduct(string slug, Product product,
+            List<IFormFile>? ImageFiles,
+            IFormFile? ManufacturerLogoFile,
             List<int>? ShopIds, List<bool>? ShopInStocks)
         {
-            if (id != product.Id) return NotFound();
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
                 ViewBag.Shops = await _shopService.GetAllShopsAsync();
-                ViewBag.ExistingAvailabilities = await _db.ProductShopAvailabilities
-                    .Where(a => a.ProductId == id).ToListAsync();
+                ViewBag.ExistingAvailabilities = await _shopAvailRepo.GetByProductIdAsync(product.Id);
                 return View(product);
             }
 
-            if (ImagePaths != null)
+            if (ManufacturerLogoFile != null && ManufacturerLogoFile.Length > 0)
+            {
+                var logoPath = await SaveUploadedFileAsync(ManufacturerLogoFile, "manufacturers");
+                if (logoPath != null) product.ManufacturerLogo = logoPath;
+            }
+
+            if (ImageFiles != null && ImageFiles.Any(f => f != null && f.Length > 0))
             {
                 product.Images.Clear();
                 bool firstImg = true;
-                foreach (var path in ImagePaths.Where(p => !string.IsNullOrWhiteSpace(p)))
+                foreach (var file in ImageFiles.Where(f => f != null && f.Length > 0))
                 {
-                    product.Images.Add(new ProductImage { ImagePath = path.Trim(), ProductId = id, IsMain = firstImg });
-                    firstImg = false;
+                    var path = await SaveUploadedFileAsync(file, "products");
+                    if (path != null)
+                    {
+                        product.Images.Add(new ProductImage { ImagePath = path, ProductId = product.Id, IsMain = firstImg });
+                        firstImg = false;
+                    }
                 }
             }
 
             await _productService.UpdateProductAsync(product);
 
-            // Update shop availabilities
-            var existing = await _db.ProductShopAvailabilities.Where(a => a.ProductId == id).ToListAsync();
-            _db.ProductShopAvailabilities.RemoveRange(existing);
-            if (ShopIds != null)
-            {
-                for (int i = 0; i < ShopIds.Count; i++)
-                {
-                    _db.ProductShopAvailabilities.Add(new ProductShopAvailability
-                    {
-                        ProductId = id,
-                        ShopId = ShopIds[i],
-                        InStock = ShopInStocks != null && i < ShopInStocks.Count && ShopInStocks[i]
-                    });
-                }
-            }
-            await _db.SaveChangesAsync();
+            var availabilities = (ShopIds ?? new List<int>())
+                .Select((shopId, i) =>
+                    (shopId, ShopInStocks != null && i < ShopInStocks.Count && ShopInStocks[i]))
+                .ToList();
+            await _shopAvailRepo.SetAvailabilitiesAsync(product.Id, availabilities);
 
             TempData["Success"] = $"✅ Product \"{product.Name}\" updated!";
             return RedirectToAction(nameof(Products));
         }
 
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(string slug)
         {
-            var product = await _productService.GetProductDetailAsync(id);
+            var product = await _productService.GetProductBySlugAsync(slug);
             if (product == null) return NotFound();
             return View(product);
         }
 
         [HttpPost, ActionName("DeleteProduct")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteProductConfirmed(int id)
+        public async Task<IActionResult> DeleteProductConfirmed(string slug)
         {
-            await _productService.DeleteProductAsync(id);
+            var product = await _productService.GetProductBySlugAsync(slug);
+            if (product != null)
+                await _productService.DeleteProductAsync(product.Id);
             TempData["Success"] = "Product deleted!";
             return RedirectToAction(nameof(Products));
         }
 
-        // ── CATEGORIES CRUD ────────────────────────────────────────────────────
+        // ── CATEGORIES ────────────────────────────────────────────────────────
         public async Task<IActionResult> Categories()
         {
             var cats = await _categoryService.GetAllCategoriesAsync();
             return View(cats);
         }
 
-        public IActionResult CreateCategory() => View();
+        public IActionResult CreateCategory() => View(new Category());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateCategory(Category category)
+        public async Task<IActionResult> CreateCategory(Category category, IFormFile? ImageFile)
         {
             if (!ModelState.IsValid) return View(category);
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                var path = await SaveUploadedFileAsync(ImageFile, "categories");
+                if (path != null) category.Image = path;
+            }
             await _categoryService.CreateCategoryAsync(category);
             TempData["Success"] = $"Category \"{category.Name}\" created!";
             return RedirectToAction(nameof(Categories));
         }
 
-        public async Task<IActionResult> EditCategory(int id)
+        public async Task<IActionResult> EditCategory(string slug)
         {
-            var cat = await _categoryService.GetCategoryByIdAsync(id);
+            var cat = await _categoryService.GetCategoryBySlugAsync(slug);
             if (cat == null) return NotFound();
             return View(cat);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCategory(int id, Category category)
+        public async Task<IActionResult> EditCategory(string slug, Category category, IFormFile? ImageFile)
         {
-            if (id != category.Id) return NotFound();
             if (!ModelState.IsValid) return View(category);
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                var path = await SaveUploadedFileAsync(ImageFile, "categories");
+                if (path != null) category.Image = path;
+            }
             await _categoryService.UpdateCategoryAsync(category);
             TempData["Success"] = $"Category \"{category.Name}\" updated!";
             return RedirectToAction(nameof(Categories));
         }
 
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(string slug)
         {
-            var cat = await _categoryService.GetCategoryByIdAsync(id);
+            var cat = await _categoryService.GetCategoryBySlugAsync(slug);
             if (cat == null) return NotFound();
             return View(cat);
         }
 
         [HttpPost, ActionName("DeleteCategory")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteCategoryConfirmed(int id)
+        public async Task<IActionResult> DeleteCategoryConfirmed(string slug)
         {
-            await _categoryService.DeleteCategoryAsync(id);
+            var cat = await _categoryService.GetCategoryBySlugAsync(slug);
+            if (cat != null) await _categoryService.DeleteCategoryAsync(cat.Id);
             TempData["Success"] = "Category deleted!";
             return RedirectToAction(nameof(Categories));
         }
 
-        // ── SUBCATEGORIES CRUD ─────────────────────────────────────────────────
+        // ── SUBCATEGORIES ─────────────────────────────────────────────────────
         public async Task<IActionResult> CreateSubcategory()
         {
             ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
@@ -229,21 +259,26 @@ namespace DIY_STORE.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSubcategory(Subcategory subcategory)
+        public async Task<IActionResult> CreateSubcategory(Subcategory subcategory, IFormFile? ImageFile)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
                 return View(subcategory);
             }
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                var path = await SaveUploadedFileAsync(ImageFile, "subcategories");
+                if (path != null) subcategory.Image = path;
+            }
             await _subcategoryService.CreateSubcategoryAsync(subcategory);
             TempData["Success"] = $"Subcategory \"{subcategory.Name}\" created!";
             return RedirectToAction(nameof(Categories));
         }
 
-        public async Task<IActionResult> EditSubcategory(int id)
+        public async Task<IActionResult> EditSubcategory(string slug)
         {
-            var sub = await _subcategoryService.GetSubcategoryByIdAsync(id);
+            var sub = await _subcategoryService.GetSubcategoryBySlugAsync(slug);
             if (sub == null) return NotFound();
             ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
             return View(sub);
@@ -251,22 +286,26 @@ namespace DIY_STORE.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditSubcategory(int id, Subcategory subcategory)
+        public async Task<IActionResult> EditSubcategory(string slug, Subcategory subcategory, IFormFile? ImageFile)
         {
-            if (id != subcategory.Id) return NotFound();
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
                 return View(subcategory);
+            }
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                var path = await SaveUploadedFileAsync(ImageFile, "subcategories");
+                if (path != null) subcategory.Image = path;
             }
             await _subcategoryService.UpdateSubcategoryAsync(subcategory);
             TempData["Success"] = $"Subcategory \"{subcategory.Name}\" updated!";
             return RedirectToAction(nameof(Categories));
         }
 
-        public async Task<IActionResult> DeleteSubcategory(int id)
+        public async Task<IActionResult> DeleteSubcategory(string slug)
         {
-            var sub = await _subcategoryService.GetSubcategoryByIdAsync(id);
+            var sub = await _subcategoryService.GetSubcategoryBySlugAsync(slug);
             if (sub == null) return NotFound();
             return View(sub);
         }
@@ -280,7 +319,7 @@ namespace DIY_STORE.Controllers
             return RedirectToAction(nameof(Categories));
         }
 
-        // ── MESSAGES ───────────────────────────────────────────────────────────
+        // ── MESSAGES ──────────────────────────────────────────────────────────
         public async Task<IActionResult> Messages()
         {
             var messages = await _supportService.GetAllMessagesAsync();

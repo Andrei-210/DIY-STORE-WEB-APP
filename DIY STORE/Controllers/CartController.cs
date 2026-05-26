@@ -36,22 +36,49 @@ namespace DIY_STORE.Controllers
             var product = await _productService.GetProductDetailAsync(productId);
             if (product == null)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
-                    Request.Headers.Accept.ToString().Contains("application/json"))
+                if (Request.Headers.Accept.ToString().Contains("application/json"))
                     return Json(new { success = false, message = "Product not found." });
                 return NotFound();
             }
 
-            var imageUrl = product.Images.FirstOrDefault()?.ImagePath ?? "images/placeholder.webp";
-            _cartService.AddToCart(HttpContext.Session, product.Id, product.Name, product.Price, imageUrl, quantity);
-
+            // Stock check
             var cart = _cartService.GetCart(HttpContext.Session);
-            int cartCount = cart.Items.Sum(i => i.Quantity);
+            var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+            int alreadyInCart = existingItem?.Quantity ?? 0;
+            int requestedTotal = alreadyInCart + quantity;
 
-            if (Request.Headers.Accept.ToString().Contains("application/json") ||
-                Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            if (product.Stock == 0 || requestedTotal > product.Stock)
             {
-                return Json(new { success = true, message = $"\"{product.Name}\" adăugat în coș!", count = cartCount });
+                var msg = product.Stock == 0
+                    ? $"\"{product.Name}\" is out of stock."
+                    : $"Only {product.Stock} unit(s) available. You already have {alreadyInCart} in your cart.";
+
+                if (Request.Headers.Accept.ToString().Contains("application/json"))
+                    return Json(new { success = false, message = msg });
+
+                TempData["CartError"] = msg;
+                return RedirectToAction("Index");
+            }
+
+            var imageUrl = product.Images.FirstOrDefault()?.ImagePath ?? "images/placeholder.webp";
+
+            // Pass stock so cart can enforce max quantity
+            _cartService.AddToCart(HttpContext.Session, product.Id, product.Slug, product.Name,
+                product.Price, imageUrl, quantity, product.Stock);
+
+            var updatedCart = _cartService.GetCart(HttpContext.Session);
+            int cartCount = updatedCart.Items.Count; // distinct products
+
+            if (Request.Headers.Accept.ToString().Contains("application/json"))
+            {
+                return Json(new
+                {
+                    success = true,
+                    count = cartCount,
+                    productName = product.Name,
+                    productPrice = product.Price,
+                    productImage = imageUrl
+                });
             }
 
             TempData["CartMessage"] = $"\"{product.Name}\" a fost adăugat în coș!";
@@ -62,7 +89,27 @@ namespace DIY_STORE.Controllers
         public IActionResult Count()
         {
             var cart = _cartService.GetCart(HttpContext.Session);
-            return Json(new { count = cart.Items.Sum(i => i.Quantity) });
+            return Json(new { count = cart.Items.Count });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateQuantity(int productId, int quantity)
+        {
+            // Validate quantity against real stock
+            var product = await _productService.GetProductDetailAsync(productId);
+            if (product != null && quantity > product.Stock)
+            {
+                TempData["CartError"] = $"Only {product.Stock} unit(s) of \"{product.Name}\" available in stock.";
+                quantity = product.Stock; // clamp to max
+            }
+
+            if (quantity <= 0)
+                _cartService.RemoveFromCart(HttpContext.Session, productId);
+            else
+                _cartService.UpdateQuantity(HttpContext.Session, productId, quantity);
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -71,14 +118,6 @@ namespace DIY_STORE.Controllers
         {
             _cartService.RemoveFromCart(HttpContext.Session, productId);
             TempData["CartMessage"] = "Produs eliminat din coș.";
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult UpdateQuantity(int productId, int quantity)
-        {
-            _cartService.UpdateQuantity(HttpContext.Session, productId, quantity);
             return RedirectToAction("Index");
         }
 
@@ -106,16 +145,24 @@ namespace DIY_STORE.Controllers
                 return View("Checkout", model);
 
             var userId = _userManager.GetUserId(User)!;
-            var order = await _orderService.PlaceOrderAsync(userId, model, cart);
-            _cartService.ClearCart(HttpContext.Session);
 
-            // Redirect to confirmation page with order details
-            TempData["OrderId"] = order.Id;
-            TempData["FullName"] = model.FullName;
-            TempData["PaymentMethod"] = model.PaymentMethod;
-            TempData["Total"] = cart.Total.ToString("0.00");
+            try
+            {
+                var order = await _orderService.PlaceOrderAsync(userId, model, cart);
+                _cartService.ClearCart(HttpContext.Session);
 
-            return RedirectToAction("OrderConfirmation");
+                TempData["OrderId"] = order.Id;
+                TempData["FullName"] = model.FullName;
+                TempData["PaymentMethod"] = model.PaymentMethod;
+                TempData["Total"] = cart.Total.ToString("0.00");
+
+                return RedirectToAction("OrderConfirmation");
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View("Checkout", model);
+            }
         }
 
         public IActionResult OrderConfirmation()

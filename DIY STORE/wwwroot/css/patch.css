@@ -1,0 +1,65 @@
+/*
+ * patch.css  — place in wwwroot/css/
+ * Include in _Layout.cshtml or add <link> in the affected views.
+ *
+ * Fixes:
+ *  1. Carousel prev/next arrow vertical centering
+ *  2. Login / Register validation error visibility
+ */
+
+/* ── 1. Carousel arrow fix ─────────────────────────────────────────────────── */
+#productCarousel .pc-prev,
+#productCarousel .pc-next {
+    /* Reset any inherited line-height that shifts the glyph */
+    line-height: 0 !important;
+    font-size: 1.5rem !important;
+    /* Flex centering is already set, but padding-bottom compensates
+       for the optical illusion of ‹ / › being too high */
+    padding: 4px 0 10px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+
+/* ── 2. Login / Register form validation errors ────────────────────────────── */
+
+/* The validation summary */
+.auth-body .validation-summary-errors ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.auth-body .validation-summary-errors {
+    color: #842029;
+    background: #f8d7da;
+    border: 1px solid #f5c2c7;
+    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Per-field span errors */
+.auth-body .field-validation-error {
+    display: block;
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 3px;
+}
+
+/* Make the input red-bordered when invalid */
+.auth-body .input-validation-error {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8 !important;
+}
+
+.auth-body .input-validation-error:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 3px rgba(220,53,69,0.15) !important;
+}
+
+/* Alert wrapper already in view — just ensure it's styled */
+.auth-body .alert-danger {
+    border-radius: 8px;
+    font-size: 0.875rem;
+}

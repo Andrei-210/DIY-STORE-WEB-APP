@@ -1,3 +1,4 @@
+@model DIY_STORE.Models.ContactFormModel
 @{
     ViewData["Title"] = "Contact";
 }
@@ -10,14 +11,13 @@
     <div class="container">
         <h2 class="text-center mb-5">Contact Us</h2>
 
-        @* Afiseaza mesajul de succes daca exista in TempData *@
         @if (TempData["ContactSuccess"] != null)
         {
             <div class="alert alert-success text-center">@TempData["ContactSuccess"]</div>
         }
 
         <div class="row g-5">
-            <!-- Informatii Contact -->
+            <!-- Contact Info -->
             <div class="col-md-5">
                 <div class="contact-info p-4">
                     <h4>Head Office</h4>
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <!-- Formular Contact -->
+            <!-- Contact Form -->
             <div class="col-md-7">
                 <div class="contact-form p-4">
                     <h4>Send us a message</h4>
@@ -36,23 +36,27 @@
                         @Html.AntiForgeryToken()
 
                         <div class="mb-3">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" name="Name" required>
+                            <label asp-for="Name" class="form-label">Full Name</label>
+                            <input asp-for="Name" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" name="Email" required>
+                            <label asp-for="Email" class="form-label">Email Address</label>
+                            <input asp-for="Email" class="form-control">
+                            <span asp-validation-for="Email" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Subject</label>
-                            <input type="text" class="form-control" name="Subject" required>
+                            <label asp-for="Subject" class="form-label">Subject</label>
+                            <input asp-for="Subject" class="form-control">
+                            <span asp-validation-for="Subject" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Message</label>
-                            <textarea class="form-control" name="Message" rows="4" required></textarea>
+                            <label asp-for="Message" class="form-label">Message</label>
+                            <textarea asp-for="Message" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Message" class="text-danger small"></span>
                         </div>
 
                         <button type="submit" class="btn btn-warning w-100">Send Message</button>
@@ -61,7 +65,7 @@
             </div>
         </div>
 
-        <!-- Harta -->
+        <!-- Map -->
         <div class="row mt-5">
             <div class="col-12">
                 <h4 class="text-center mb-3">Our Location</h4>
@@ -79,3 +83,7 @@
 
     </div>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

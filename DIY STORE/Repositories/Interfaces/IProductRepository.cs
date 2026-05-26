@@ -12,9 +12,11 @@ namespace DIY_STORE.Repositories
         Task<IEnumerable<Product>> GetFilteredAsync(string? categorySlug, string? subcategoryName, decimal? minPrice, decimal? maxPrice, int page, int perPage);
         Task<int> CountFilteredAsync(string? categorySlug, string? subcategoryName, decimal? minPrice, decimal? maxPrice);
         Task<Product?> GetByIdAsync(int id);
+        Task<Product?> GetBySlugAsync(string slug);
         Task<IEnumerable<Product>> GetSimilarAsync(int productId, int subcategoryId, int count = 4);
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
+        Task UpdateStockAsync(int productId, int newStock);   // ← safe stock-only update
         Task DeleteAsync(int id);
     }
 }

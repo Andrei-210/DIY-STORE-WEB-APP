@@ -2,15 +2,6 @@ using DIY_STORE.ViewModels;
 
 namespace DIY_STORE.Services
 {
-    public interface ICartService
-    {
-        CartViewModel GetCart(ISession session);
-        void AddToCart(ISession session, int productId, string name, decimal price, string imageUrl, int quantity = 1);
-        void RemoveFromCart(ISession session, int productId);
-        void UpdateQuantity(ISession session, int productId, int quantity);
-        void ClearCart(ISession session);
-    }
-
     public class CartService : ICartService
     {
         private const string CartKey = "Cart";
@@ -24,20 +15,33 @@ namespace DIY_STORE.Services
         }
 
         public void AddToCart(ISession session, int productId, string name, decimal price, string imageUrl, int quantity = 1)
+            => AddToCart(session, productId, string.Empty, name, price, imageUrl, quantity, 0);
+
+        public void AddToCart(ISession session, int productId, string productSlug, string name, decimal price, string imageUrl, int quantity = 1)
+            => AddToCart(session, productId, productSlug, name, price, imageUrl, quantity, 0);
+
+        public void AddToCart(ISession session, int productId, string productSlug, string name, decimal price, string imageUrl, int quantity, int stock)
         {
             var cart = GetCart(session);
             var existing = cart.Items.FirstOrDefault(i => i.ProductId == productId);
             if (existing != null)
+            {
                 existing.Quantity += quantity;
+                existing.Stock = stock; // refresh stock
+            }
             else
+            {
                 cart.Items.Add(new CartItemViewModel
                 {
                     ProductId = productId,
+                    ProductSlug = productSlug,
                     Name = name,
                     Price = price,
                     ImageUrl = imageUrl,
-                    Quantity = quantity
+                    Quantity = quantity,
+                    Stock = stock
                 });
+            }
             SaveCart(session, cart);
         }
 

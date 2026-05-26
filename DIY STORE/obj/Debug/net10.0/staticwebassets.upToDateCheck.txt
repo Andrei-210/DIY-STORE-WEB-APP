@@ -4,6 +4,7 @@ wwwroot\css\contact.css
 wwwroot\css\customer_support.css
 wwwroot\css\footer.css
 wwwroot\css\navbar.css
+wwwroot\css\patch.css
 wwwroot\css\product.css
 wwwroot\css\products.css
 wwwroot\css\profile.css
@@ -16,6 +17,7 @@ wwwroot\images\about_tools.jpg
 wwwroot\images\brick.webp
 wwwroot\images\brush.webp
 wwwroot\images\cable.webp
+wwwroot\images\categories\brick.webp
 wwwroot\images\cement.jpg
 wwwroot\images\chiuveta.webp
 wwwroot\images\drill.webp
@@ -24,16 +26,29 @@ wwwroot\images\grinders.webp
 wwwroot\images\hammer.jpg
 wwwroot\images\hoses.jpg
 wwwroot\images\insulation.jpg
+wwwroot\images\manufacturers\firma_hammer_pro.webp
 wwwroot\images\pipe.jpg
 wwwroot\images\plier.webp
 wwwroot\images\pot.jpg
+wwwroot\images\products\brick.webp
+wwwroot\images\products\brush.webp
+wwwroot\images\products\cement.jpg
+wwwroot\images\products\chiuveta.webp
+wwwroot\images\products\hammer.jpg
+wwwroot\images\products\pot.jpg
+wwwroot\images\products\screwdriver.jpg
+wwwroot\images\profile-pictures\3850a558-4558-4cf3-9255-6d6cf5b9b9d5_a2035aa4-6d2c-4139-beeb-1f71bf79e16d.jpg
+wwwroot\images\profile-pictures\f9411bfa-f8ec-45e4-9455-b9446e1afff4_b1295691-22b5-4dad-80bd-e82285254fac.jpg
 wwwroot\images\roller.jpg
 wwwroot\images\Sanders.jpg
 wwwroot\images\saws.jpg
 wwwroot\images\screwdriver.jpg
 wwwroot\images\seed.webp
+wwwroot\images\shops\shop_placeholder.webp
 wwwroot\images\shop_placeholder.webp
 wwwroot\images\shovel.webp
+wwwroot\images\subcategories\brick.webp
+wwwroot\images\subcategories\drill.webp
 wwwroot\images\switch.webp
 wwwroot\images\varnish.webp
 wwwroot\images\wall paint.webp
@@ -106,10 +121,8 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\additional-methods.min.js
-D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
-D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map
@@ -156,7 +169,7 @@ D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\products.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\product.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\navbar.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\categories.js
-D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\cart.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\patch.css
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\favicon.ico
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\style.css
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\site.css
@@ -170,18 +183,21 @@ D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\customer_support.css
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\contact.css
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\cart.css
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\css\about.css
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\additional-methods.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\jquery.validate.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\LICENSE.md
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\LICENSE.txt
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.min.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.min.map
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.slim.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.slim.min.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\dist\jquery.slim.min.map
-D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery\LICENSE.txt
-D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation\dist\additional-methods.js
-D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
 D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\lib\bootstrap\dist\js\bootstrap.js
+D:\Andrei\Proiecte\DIY STORE\DIY STORE\wwwroot\js\cart.js

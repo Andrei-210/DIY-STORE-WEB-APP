@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Andrei\\Proiecte\\DIY STORE\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{659C7DEB-97BF-0CD8-ABD4-59CD34B1C20C}|DIY STORE\\DIY STORE.csproj|d:\\andrei\\proiecte\\diy store\\diy store\\wwwroot\\css\\patch.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{659C7DEB-97BF-0CD8-ABD4-59CD34B1C20C}|DIY STORE\\DIY STORE.csproj|solutionrelative:diy store\\wwwroot\\css\\patch.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "patch.css",
+              "DocumentMoniker": "D:\\Andrei\\Proiecte\\DIY STORE\\DIY STORE\\wwwroot\\css\\patch.css",
+              "RelativeDocumentMoniker": "DIY STORE\\wwwroot\\css\\patch.css",
+              "ToolTip": "D:\\Andrei\\Proiecte\\DIY STORE\\DIY STORE\\wwwroot\\css\\patch.css",
+              "RelativeToolTip": "DIY STORE\\wwwroot\\css\\patch.css",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-05-26T20:39:41.498Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

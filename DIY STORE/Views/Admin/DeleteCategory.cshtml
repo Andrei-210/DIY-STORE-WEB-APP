@@ -8,7 +8,7 @@
         <p class="text-warning"><strong>Warning:</strong> All subcategories and products will also be deleted!</p>
         <form asp-action="DeleteCategory" method="post" class="d-flex gap-2">
             @Html.AntiForgeryToken()
-            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="slug" value="@Model.Slug" />
             <button type="submit" class="btn btn-danger">Yes, Delete</button>
             <a asp-action="Categories" class="btn btn-outline-secondary">Cancel</a>
         </form>

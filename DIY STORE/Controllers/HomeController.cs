@@ -59,7 +59,7 @@ namespace DIY_STORE.Controllers
         public IActionResult About() => View();
 
         [HttpGet]
-        public IActionResult Contact() => View();
+        public IActionResult Contact() => View(new ContactFormModel());
 
         [HttpPost]
         [ValidateAntiForgeryToken]

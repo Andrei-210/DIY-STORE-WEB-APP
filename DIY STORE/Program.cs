@@ -38,8 +38,10 @@ builder.Services.AddScoped<IContactMessageRepository, ContactMessageRepository>(
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
 builder.Services.AddScoped<ISubcategoryRepository, SubcategoryRepository>();
+builder.Services.AddScoped<IProductShopAvailabilityRepository, ProductShopAvailabilityRepository>();
 
 // ── Services ──────────────────────────────────────────────────────────────────
+builder.Services.AddScoped<IAccountService, AccountService>();   // NEW: Identity service
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShopService, ShopService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -63,7 +65,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Seed Admin role
+// Seed roles and default admin
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();

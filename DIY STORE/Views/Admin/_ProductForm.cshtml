@@ -65,23 +65,50 @@
         <input asp-for="ManufacturerName" class="form-control">
     </div>
     <div class="col">
-        <label asp-for="ManufacturerLogo" class="form-label">Manufacturer Logo filename</label>
-        <input asp-for="ManufacturerLogo" class="form-control" placeholder="e.g. bosch.png">
+        <label class="form-label">Manufacturer Logo</label>
+        @if (!string.IsNullOrEmpty(Model?.ManufacturerLogo))
+        {
+            <div class="mb-2 d-flex align-items-center gap-2">
+                <img src="~/images/@Model.ManufacturerLogo" alt="Logo" style="max-height:48px;max-width:96px;object-fit:contain;border:1px solid #dee2e6;border-radius:4px;padding:2px;">
+                <small class="text-muted">@Model.ManufacturerLogo</small>
+            </div>
+            <input type="hidden" asp-for="ManufacturerLogo" />
+        }
+        <input type="file" name="ManufacturerLogoFile" class="form-control" accept="image/*">
+        <div class="form-text">Upload a new logo image (leave empty to keep existing)</div>
     </div>
 </div>
 
 <!-- Imagini produs -->
 <div class="mb-3">
     <label class="form-label fw-semibold">Product Images</label>
+
+    @if (Model?.Images != null && Model.Images.Any())
+    {
+        <div class="mb-2">
+            <p class="form-text mb-1">Current images:</p>
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                @foreach (var img in Model.Images)
+                {
+                    var ip = img.ImagePath.Replace("images/", "");
+                    <div class="text-center" style="width:80px;">
+                        <img src="~/images/@ip" style="max-height:60px;max-width:80px;object-fit:contain;border:1px solid #dee2e6;border-radius:4px;" alt="">
+                        <div class="small text-muted text-truncate" style="max-width:80px;" title="@img.ImagePath">@ip</div>
+                    </div>
+                }
+            </div>
+            <div class="alert alert-info py-1 px-2 small">Uploading new images will replace all existing ones.</div>
+        </div>
+    }
+
     <div id="image-fields">
         <div class="input-group mb-2">
             <span class="input-group-text">📷 1</span>
-            <input type="text" name="ImagePaths" class="form-control" placeholder="e.g. drill-front.webp">
-            <span class="input-group-text text-muted small">filename from wwwroot/images/</span>
+            <input type="file" name="ImageFiles" class="form-control" accept="image/*">
         </div>
     </div>
     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="addImageField()">+ Add another image</button>
-    <div class="form-text">Adaugă numele fișierului imaginii (ex: drill.webp). Pune fișierul în <code>wwwroot/images/</code>.</div>
+    <div class="form-text">Upload product images from your computer.</div>
 </div>
 
 <div class="form-check mb-3">
@@ -95,7 +122,7 @@
     <div class="mb-3">
         <label class="form-label fw-semibold">🏪 Store Availability</label>
         <div class="card border p-3">
-            <div class="form-text mb-2">Selectează în ce magazine este disponibil produsul și dacă este în stoc.</div>
+            <div class="form-text mb-2">Select which stores carry this product and whether it's in stock.</div>
             @foreach (var shop in shops)
             {
                 var avail = existingAvail.FirstOrDefault(a => a.ShopId == shop.Id);
@@ -135,7 +162,7 @@
         const div = document.createElement('div');
         div.className = 'input-group mb-2';
         div.innerHTML = `<span class="input-group-text">📷 ${imgCount}</span>
-            <input type="text" name="ImagePaths" class="form-control" placeholder="e.g. product-${imgCount}.webp">
+            <input type="file" name="ImageFiles" class="form-control" accept="image/*">
             <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">✕</button>`;
         document.getElementById('image-fields').appendChild(div);
     }

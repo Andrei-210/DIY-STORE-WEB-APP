@@ -5,10 +5,12 @@ namespace DIY_STORE.ViewModels
     public class CartItemViewModel
     {
         public int ProductId { get; set; }
+        public string ProductSlug { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
+        public int Stock { get; set; }   // current stock — stored in session for cart validation
         public decimal Subtotal => Price * Quantity;
     }
 
@@ -56,6 +58,7 @@ namespace DIY_STORE.ViewModels
         public string Email { get; set; } = string.Empty;
         public string? UserName { get; set; }
         public string Address { get; set; } = string.Empty;
+        public string? ProfilePicturePath { get; set; }
         public string ActiveSection { get; set; } = "account";
         public List<DIY_STORE.Models.Order> Orders { get; set; } = new();
         public List<DIY_STORE.Models.Favorite> Favorites { get; set; } = new();

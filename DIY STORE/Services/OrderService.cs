@@ -4,13 +4,6 @@ using DIY_STORE.ViewModels;
 
 namespace DIY_STORE.Services
 {
-    public interface IOrderService
-    {
-        Task<IEnumerable<Order>> GetUserOrdersAsync(string userId);
-        Task<Order?> GetOrderAsync(int id);
-        Task<Order> PlaceOrderAsync(string userId, CheckoutViewModel checkout, CartViewModel cart);
-    }
-
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepo;
@@ -30,6 +23,24 @@ namespace DIY_STORE.Services
 
         public async Task<Order> PlaceOrderAsync(string userId, CheckoutViewModel checkout, CartViewModel cart)
         {
+            // ── Validate and deduct stock ─────────────────────────────────────
+            foreach (var item in cart.Items)
+            {
+                var product = await _productRepo.GetByIdAsync(item.ProductId);
+                if (product == null)
+                    throw new InvalidOperationException($"Product #{item.ProductId} no longer exists.");
+
+                if (product.Stock < item.Quantity)
+                    throw new InvalidOperationException(
+                        $"Insufficient stock for \"{product.Name}\". " +
+                        $"Available: {product.Stock}, requested: {item.Quantity}.");
+
+                // Use UpdateStockAsync — only touches the Stock column, images are preserved
+                int newStock = product.Stock - item.Quantity;
+                await _productRepo.UpdateStockAsync(product.Id, newStock);
+            }
+
+            // ── Create order ──────────────────────────────────────────────────
             var order = new Order
             {
                 UserId = userId,

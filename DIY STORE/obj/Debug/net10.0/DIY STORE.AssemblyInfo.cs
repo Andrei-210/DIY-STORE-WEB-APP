@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DIY STORE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+174241d30221762a62701207321f46583275656f")]
 [assembly: System.Reflection.AssemblyProductAttribute("DIY STORE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DIY STORE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

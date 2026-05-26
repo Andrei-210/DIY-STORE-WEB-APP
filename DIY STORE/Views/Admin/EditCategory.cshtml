@@ -4,7 +4,7 @@
 <div class="container py-5">
     <h2 class="mb-4">✏️ Edit Category: @Model.Name</h2>
     <div class="card shadow-sm p-4" style="max-width:500px;">
-        <form asp-action="EditCategory" method="post">
+        <form asp-action="EditCategory" asp-route-slug="@Model.Slug" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <input type="hidden" asp-for="Id" />
             <div class="mb-3">
@@ -18,16 +18,17 @@
                 <span asp-validation-for="Slug" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Image" class="form-label">Category Image Path</label>
+                <label class="form-label">Category Image</label>
                 @if (!string.IsNullOrEmpty(Model.Image))
                 {
-                    <div class="mb-2">
-                        <img src="~/images/@Model.Image" alt="@Model.Name" style="max-height:80px;object-fit:contain;border:1px solid #dee2e6;border-radius:6px;padding:4px;">
+                    <div class="mb-2 d-flex align-items-center gap-2">
+                        <img src="~/images/@Model.Image" alt="@Model.Name" style="max-height:80px;max-width:120px;object-fit:contain;border:1px solid #dee2e6;border-radius:6px;padding:4px;">
+                        <small class="text-muted">Current: @Model.Image</small>
                     </div>
+                    <input type="hidden" asp-for="Image" />
                 }
-                <input asp-for="Image" class="form-control" placeholder="e.g. categories/power-tools.jpg">
-                <div class="form-text">Enter the image filename relative to wwwroot/images/</div>
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <input type="file" name="ImageFile" class="form-control" accept="image/*">
+                <div class="form-text">Upload a new image (leave empty to keep existing).</div>
             </div>
             <button type="submit" class="btn btn-warning w-100">Save</button>
         </form>

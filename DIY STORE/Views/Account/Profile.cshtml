@@ -4,32 +4,177 @@
 @{
     ViewData["Title"] = "Profile";
     var tokens = Antiforgery.GetAndStoreTokens(Context);
+    var profilePicUrl = !string.IsNullOrEmpty(Model.ProfilePicturePath)
+        ? $"/images/{Model.ProfilePicturePath}"
+        : null;
+    var initials = Model.UserName?.Substring(0, 1).ToUpper() ?? "U";
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/profile.css">
+    <style>
+        .sidebar-user-info {
+            text-align: center;
+            padding: 1.5rem 1rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 0.5rem;
+        }
+        .sidebar-avatar {
+            width: 72px; height: 72px;
+            border-radius: 50%; object-fit: cover;
+            border: 3px solid #f59e0b;
+            display: block; margin: 0 auto 0.5rem;
+        }
+        .sidebar-avatar-placeholder {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,#f59e0b,#d97706);
+            color:#fff; font-size:1.6rem; font-weight:700;
+            display:flex; align-items:center; justify-content:center;
+            margin: 0 auto 0.5rem;
+            border: 3px solid #fcd34d;
+        }
+        .sidebar-username { font-weight:600; font-size:.9rem; color:#111827; margin-bottom:1px; }
+        .sidebar-email    { font-size:.75rem; color:#6b7280; }
+
+        /* Remove extra space at bottom of sidebar card after last list-group item */
+        .sidebar-nav-card { border-radius: 8px; overflow: hidden; }
+        .sidebar-nav-card .list-group-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* Section cards */
+        .edit-section-card {
+            border: 1.5px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+        }
+        .edit-section-header {
+            background: #f9fafb;
+            padding: .75rem 1.25rem;
+            font-weight: 600;
+            font-size: .95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            border-bottom: 1.5px solid #e5e7eb;
+        }
+        .edit-section-header:hover { background: #f3f4f6; }
+        .edit-section-body { padding: 1.25rem; }
+
+        /* Avatar crop modal */
+        #crop-modal-overlay {
+            position:fixed; inset:0;
+            background:rgba(0,0,0,.6);
+            z-index:10010;
+            display:flex; align-items:center; justify-content:center;
+        }
+        #crop-modal-box {
+            background:#fff; border-radius:16px;
+            box-shadow:0 24px 80px rgba(0,0,0,.35);
+            max-width:460px; width:94%;
+            overflow:hidden;
+        }
+        #crop-modal-header {
+            background:linear-gradient(135deg,#f59e0b,#d97706);
+            color:#fff; padding:1rem 1.25rem;
+            display:flex; align-items:center; justify-content:space-between;
+        }
+        #crop-modal-header h5 { margin:0; font-weight:700; font-size:1rem; }
+        #crop-close { background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer; }
+        #crop-canvas-wrap {
+            padding:1rem;
+            display:flex; align-items:center; justify-content:center;
+            background:#f3f4f6;
+            min-height:260px;
+        }
+        #crop-canvas { border-radius:8px; max-width:100%; cursor:move; display:block; }
+        #crop-controls { padding:.75rem 1.25rem; display:flex; align-items:center; gap:.75rem; }
+        #crop-controls label { font-size:.85rem; color:#374151; white-space:nowrap; }
+        #crop-zoom { flex:1; }
+        #crop-footer { padding:.75rem 1.25rem 1.25rem; display:flex; gap:.5rem; }
+        #crop-footer button { flex:1; padding:.55rem; font-weight:600; border-radius:8px; border:none; cursor:pointer; }
+        #btn-crop-cancel { background:#f3f4f6; color:#374151; }
+        #btn-crop-apply  { background:linear-gradient(135deg,#f59e0b,#d97706); color:#fff; }
+
+        /* Avatar preview circle */
+        .avatar-preview-circle {
+            width:90px; height:90px;
+            border-radius:50%; object-fit:cover;
+            border:3px solid #f59e0b;
+        }
+        .avatar-placeholder-circle {
+            width:90px; height:90px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#f59e0b,#d97706);
+            color:#fff; font-size:2rem; font-weight:700;
+            display:flex; align-items:center; justify-content:center;
+            border:3px solid #fcd34d;
+        }
+    </style>
 }
 
 <!-- Toast container -->
 <div id="toast-container" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
 
+<!-- Avatar crop modal (hidden initially) -->
+<div id="crop-modal-overlay" style="display:none;">
+    <div id="crop-modal-box">
+        <div id="crop-modal-header">
+            <h5>✂️ Crop Profile Photo</h5>
+            <button id="crop-close">×</button>
+        </div>
+        <div id="crop-canvas-wrap">
+            <canvas id="crop-canvas" width="260" height="260"></canvas>
+        </div>
+        <div id="crop-controls">
+            <label>🔍 Zoom</label>
+            <input type="range" id="crop-zoom" min="1" max="3" step="0.01" value="1">
+        </div>
+        <div id="crop-footer">
+            <button id="btn-crop-cancel">Cancel</button>
+            <button id="btn-crop-apply">Apply & Save →</button>
+        </div>
+    </div>
+</div>
+
 <div class="container mt-5 mb-5">
     <div class="row">
-        <!-- Sidebar -->
+
+        <!-- ── Sidebar ── -->
         <div class="col-md-3 mb-4">
-            <div class="list-group shadow-sm">
-                <a asp-controller="Account" asp-action="Profile" asp-route-section="account"
-                   class="list-group-item list-group-item-action @(Model.ActiveSection == "account" ? "active" : "")">
-                    👤 Account Info
-                </a>
-                <a asp-controller="Account" asp-action="Profile" asp-route-section="orders"
-                   class="list-group-item list-group-item-action @(Model.ActiveSection == "orders" ? "active" : "")">
-                    📦 Order History
-                </a>
-                <a asp-controller="Account" asp-action="Profile" asp-route-section="favorites"
-                   class="list-group-item list-group-item-action @(Model.ActiveSection == "favorites" ? "active" : "")">
-                    ❤ Favorites
-                </a>
+            <div class="card shadow-sm sidebar-nav-card">
+                <div class="sidebar-user-info">
+                    @if (profilePicUrl != null)
+                    {
+                        <img src="@profilePicUrl" alt="@Model.UserName" class="sidebar-avatar" />
+                    }
+                    else
+                    {
+                        <div class="sidebar-avatar-placeholder">@initials</div>
+                    }
+                    <div class="sidebar-username">@Model.UserName</div>
+                    <div class="sidebar-email">@Model.Email</div>
+                </div>
+
+                <div class="list-group list-group-flush">
+                    <a asp-controller="Account" asp-action="Profile" asp-route-section="account"
+                       class="list-group-item list-group-item-action @(Model.ActiveSection == "account" ? "active" : "")">
+                        👤 Account Info
+                    </a>
+                    <a asp-controller="Account" asp-action="Profile" asp-route-section="orders"
+                       class="list-group-item list-group-item-action @(Model.ActiveSection == "orders" ? "active" : "")">
+                        📦 Order History
+                    </a>
+                    <a asp-controller="Account" asp-action="Profile" asp-route-section="favorites"
+                       class="list-group-item list-group-item-action @(Model.ActiveSection == "favorites" ? "active" : "")">
+                        ❤ Favorites
+                    </a>
+                </div>
             </div>
 
             <form asp-controller="Account" asp-action="Logout" method="post" class="mt-3">
@@ -38,7 +183,7 @@
             </form>
         </div>
 
-        <!-- Content -->
+        <!-- ── Content ── -->
         <div class="col-md-9">
             <div class="card shadow-sm p-4">
 
@@ -47,21 +192,162 @@
                     <div class="alert alert-success">@TempData["OrderSuccess"]</div>
                 }
 
+                @* ═══════════════ ACCOUNT INFO ═══════════════ *@
                 @if (Model.ActiveSection == "account")
                 {
                     <h4 class="mb-4">Account Information</h4>
-                    <dl class="row">
-                        <dt class="col-sm-3">Username</dt>
-                        <dd class="col-sm-9">@Model.UserName</dd>
 
-                        <dt class="col-sm-3">Email</dt>
-                        <dd class="col-sm-9">@Model.Email</dd>
+                    @if (TempData["ProfileSuccess"] != null)
+                    {
+                        <div class="alert alert-success">✅ @TempData["ProfileSuccess"]</div>
+                    }
+                    @if (TempData["ProfileErrors"] != null)
+                    {
+                        <div class="alert alert-danger">⚠️ @TempData["ProfileErrors"]</div>
+                    }
 
-                        <dt class="col-sm-3">Address</dt>
-                        <dd class="col-sm-9">@(string.IsNullOrEmpty(Model.Address) ? "Not set" : Model.Address)</dd>
-                    </dl>
+                    <!-- Current info banner -->
+                    <div class="d-flex align-items-center gap-4 mb-4 p-3 bg-light rounded">
+                        @if (profilePicUrl != null)
+                        {
+                            <img src="@profilePicUrl" alt="@Model.UserName" class="avatar-preview-circle" id="profileBannerImg">
+                        }
+                        else
+                        {
+                            <div class="avatar-placeholder-circle" id="profileBannerImg">@initials</div>
+                        }
+                        <div>
+                            <div class="fw-bold fs-5">@Model.UserName</div>
+                            <div class="text-muted small">@Model.Email</div>
+                            <div class="text-muted small">@(string.IsNullOrEmpty(Model.Address) ? "No address set" : Model.Address)</div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden form for cropped avatar upload -->
+                    <form id="avatarUploadForm" asp-controller="Account" asp-action="UpdateProfile"
+                          method="post" enctype="multipart/form-data" style="display:none;">
+                        @Html.AntiForgeryToken()
+                        <input type="file" id="avatarRawInput" name="profilePicture" accept="image/*" style="display:none;">
+                        <input type="hidden" id="avatarCroppedData" name="croppedImageData">
+                    </form>
+
+                    <!-- ── 1. Profile Picture ── -->
+                    <div class="edit-section-card">
+                        <div class="edit-section-header" onclick="toggleSection('sec-photo')">
+                            📷 Profile Picture
+                            <span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="edit-section-body" id="sec-photo" style="display:none;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                @if (profilePicUrl != null)
+                                {
+                                    <img src="@profilePicUrl" id="cropPreviewImg"
+                                         style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid #f59e0b;">
+                                }
+                                else
+                                {
+                                    <div id="cropPreviewImg"
+                                         style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;color:#fff;">
+                                        @initials
+                                    </div>
+                                }
+                                <div>
+                                    <button type="button" class="btn btn-outline-warning btn-sm"
+                                            onclick="document.getElementById('avatarRawInput').click()">
+                                        Select Photo
+                                    </button>
+                                    <div class="text-muted small mt-1">JPG, PNG, GIF, WEBP. Will be cropped to a circle.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── 2. Username ── -->
+                    <div class="edit-section-card">
+                        <div class="edit-section-header" onclick="toggleSection('sec-username')">
+                            👤 Username
+                            <span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="edit-section-body" id="sec-username" style="display:none;">
+                            <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="mb-3">
+                                    <label class="form-label">New Username</label>
+                                    <input type="text" name="newUsername" class="form-control" value="@Model.UserName" required>
+                                </div>
+                                <button type="submit" class="btn btn-warning btn-sm px-4">Save Username</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- ── 3. Email ── -->
+                    <div class="edit-section-card">
+                        <div class="edit-section-header" onclick="toggleSection('sec-email')">
+                            📧 Email Address
+                            <span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="edit-section-body" id="sec-email" style="display:none;">
+                            <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="mb-3">
+                                    <label class="form-label">New Email</label>
+                                    <input type="email" name="newEmail" class="form-control" value="@Model.Email" required>
+                                </div>
+                                <button type="submit" class="btn btn-warning btn-sm px-4">Save Email</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- ── 4. Delivery Address ── -->
+                    <div class="edit-section-card">
+                        <div class="edit-section-header" onclick="toggleSection('sec-address')">
+                            📍 Delivery Address
+                            <span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="edit-section-body" id="sec-address" style="display:none;">
+                            <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="mb-3">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" name="newAddress" class="form-control" value="@Model.Address">
+                                </div>
+                                <button type="submit" class="btn btn-warning btn-sm px-4">Save Address</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- ── 5. Password ── -->
+                    <div class="edit-section-card">
+                        <div class="edit-section-header" onclick="toggleSection('sec-password')">
+                            🔒 Change Password
+                            <span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="edit-section-body" id="sec-password" style="display:none;">
+                            <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="mb-3">
+                                    <label class="form-label">Current Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="currentPassword" class="form-control"
+                                           placeholder="Enter your current password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" name="newPassword" class="form-control" id="pwdNew"
+                                           placeholder="Minimum 6 characters">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" name="confirmPassword" class="form-control" id="pwdConfirm"
+                                           placeholder="Repeat new password">
+                                    <div id="pwdMismatch" class="text-danger small mt-1" style="display:none;">Passwords do not match.</div>
+                                </div>
+                                <button type="submit" class="btn btn-warning btn-sm px-4" id="btnChangePwd">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
                 }
 
+                @* ═══════════════ ORDERS ═══════════════ *@
                 @if (Model.ActiveSection == "orders")
                 {
                     <h4 class="mb-4">Order History</h4>
@@ -104,6 +390,7 @@
                     }
                 }
 
+                @* ═══════════════ FAVORITES ═══════════════ *@
                 @if (Model.ActiveSection == "favorites")
                 {
                     <h4 class="mb-4">❤ My Favorites</h4>
@@ -115,7 +402,6 @@
                     else
                     {
                         <input type="hidden" id="global-csrf-token" value="@tokens.RequestToken">
-
                         <div class="row g-3">
                             @foreach (var fav in Model.Favorites)
                             {
@@ -123,28 +409,23 @@
                                 var firstImg = img.Replace("images/", "");
                                 <div class="col-md-4" id="fav-card-@fav.ProductId">
                                     <div class="card shadow-sm h-100 text-center">
-                                        <img src="~/images/@firstImg"
-                                             class="card-img-top p-2"
-                                             style="max-height:150px;object-fit:contain;"
-                                             alt="@fav.Product?.Name">
+                                        <img src="~/images/@firstImg" class="card-img-top p-2"
+                                             style="max-height:150px;object-fit:contain;" alt="@fav.Product?.Name">
                                         <div class="card-body d-flex flex-column">
                                             <h6>@fav.Product?.Name</h6>
                                             <p class="text-warning fw-bold">@fav.Product?.Price.ToString("0.00") RON</p>
                                             <div class="d-flex gap-1 mt-auto">
-                                                <!-- Inimioară plină - scoate din favorite -->
                                                 <button class="btn btn-outline-danger btn-sm"
-                                                        title="Remove from favorites"
-                                                        onclick="removeFavorite(@fav.ProductId, this)">❤</button>
-                                                <!-- View -->
+                                                        onclick="removeFavorite(@fav.ProductId)">❤</button>
                                                 <a asp-controller="Products" asp-action="Details"
-                                                   asp-route-id="@fav.ProductId"
+                                                   asp-route-slug="@fav.Product?.Slug"
                                                    class="btn btn-outline-secondary btn-sm flex-fill">View</a>
-                                                <!-- Add to Cart -->
                                                 <button class="btn btn-warning btn-sm add-to-cart-btn"
                                                         data-product-id="@fav.ProductId"
                                                         data-product-name="@fav.Product?.Name"
                                                         data-product-price="@fav.Product?.Price"
-                                                        data-product-image="images/@firstImg">
+                                                        data-product-image="images/@firstImg"
+                                                        data-stock="@fav.Product?.Stock">
                                                     🛒
                                                 </button>
                                             </div>
@@ -161,45 +442,183 @@
     </div>
 </div>
 
-@if (Model.ActiveSection == "favorites" && Model.Favorites.Any())
-{
-    @section Scripts {
-        <script src="~/js/cart.js"></script>
-        <script>
-            function getToken() {
-                return document.getElementById('global-csrf-token')?.value || '';
-            }
+@section Scripts {
+    <script src="~/js/cart.js"></script>
 
-            function showToast(msg, type = "success") {
-                const c = document.getElementById("toast-container");
-                const t = document.createElement("div");
-                t.className = `alert alert-${type} shadow mb-0`;
-                t.style.cssText = "min-width:280px;animation:fadeIn .3s;";
-                t.textContent = msg;
-                c.appendChild(t);
-                setTimeout(() => { t.style.opacity = 0; t.style.transition = "opacity .4s"; }, 2800);
-                setTimeout(() => t.remove(), 3200);
+    <script>
+        // ── Accordion sections ─────────────────────────────────────────────
+        function toggleSection(id) {
+            const body = document.getElementById(id);
+            const isOpen = body.style.display !== 'none';
+            // Close all
+            document.querySelectorAll('.edit-section-body').forEach(b => b.style.display = 'none');
+            document.querySelectorAll('.toggle-arrow').forEach(a => a.textContent = '▼');
+            // Open clicked (if it was closed)
+            if (!isOpen) {
+                body.style.display = 'block';
+                body.closest('.edit-section-card').querySelector('.toggle-arrow').textContent = '▲';
             }
+        }
 
-            async function removeFavorite(productId, btn) {
-                const tok = getToken();
-                try {
-                    const r = await fetch('/Products/ToggleFavorite', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
-                        body: `productId=${productId}&__RequestVerificationToken=${encodeURIComponent(tok)}`
-                    });
-                    const d = await r.json();
-                    if (d.success && !d.isFavorite) {
-                        const card = document.getElementById(`fav-card-${productId}`);
-                        card.style.transition = 'opacity .4s';
-                        card.style.opacity = '0';
-                        setTimeout(() => card.remove(), 400);
-                        showToast('💔 Removed from favorites!', 'warning');
-                    }
-                } catch { showToast('Error. Please try again.', 'danger'); }
+        // Auto-open section with errors after redirect
+        @if (TempData["ProfileErrors"] != null)
+        {
+            <text>toggleSection('sec-password');</text>
+        }
+
+        // ── Password match check ───────────────────────────────────────────
+        const pwdNew     = document.getElementById('pwdNew');
+        const pwdConfirm = document.getElementById('pwdConfirm');
+        const pwdMsg     = document.getElementById('pwdMismatch');
+        if (pwdConfirm) {
+            pwdConfirm.addEventListener('input', () => {
+                pwdMsg.style.display = (pwdNew.value && pwdNew.value !== pwdConfirm.value) ? '' : 'none';
+            });
+        }
+
+        // ── Favorites: remove ─────────────────────────────────────────────
+        function getToken() {
+            return document.getElementById('global-csrf-token')?.value || '';
+        }
+        function showFavToast(msg, type) {
+            const c = document.getElementById("toast-container");
+            const t = document.createElement("div");
+            t.className = `alert alert-${type} shadow mb-0`;
+            t.style.cssText = "min-width:280px;";
+            t.textContent = msg;
+            c.appendChild(t);
+            setTimeout(() => { t.style.opacity=0; t.style.transition="opacity .4s"; }, 2800);
+            setTimeout(() => t.remove(), 3200);
+        }
+        async function removeFavorite(productId) {
+            try {
+                const r = await fetch('/Products/ToggleFavorite', {
+                    method:'POST',
+                    headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/json'},
+                    body:`productId=${productId}&__RequestVerificationToken=${encodeURIComponent(getToken())}`
+                });
+                const d = await r.json();
+                if (d.success && !d.isFavorite) {
+                    const card = document.getElementById(`fav-card-${productId}`);
+                    card.style.transition='opacity .4s'; card.style.opacity='0';
+                    setTimeout(() => card.remove(), 400);
+                    showFavToast('💔 Removed from favorites!', 'warning');
+                }
+            } catch { showFavToast('Error. Please try again.', 'danger'); }
+        }
+
+        // ── Avatar crop ────────────────────────────────────────────────────
+        const rawInput    = document.getElementById('avatarRawInput');
+        const overlay     = document.getElementById('crop-modal-overlay');
+        const canvas      = document.getElementById('crop-canvas');
+        const ctx         = canvas.getContext('2d');
+        const zoomSlider  = document.getElementById('crop-zoom');
+
+        let cropImg = new Image();
+        let scale = 1, offsetX = 0, offsetY = 0;
+        let dragging = false, lastX = 0, lastY = 0;
+
+        if (rawInput) {
+            rawInput.addEventListener('change', function () {
+                if (!this.files[0]) return;
+                const reader = new FileReader();
+                reader.onload = e => {
+                    cropImg = new Image();
+                    cropImg.onload = () => {
+                        scale = 1; offsetX = 0; offsetY = 0;
+                        zoomSlider.value = 1;
+                        drawCrop();
+                        overlay.style.display = 'flex';
+                        toggleSection('sec-photo');
+                    };
+                    cropImg.src = e.target.result;
+                };
+                reader.readAsDataURL(this.files[0]);
+            });
+        }
+
+        function drawCrop() {
+            const size = canvas.width;
+            ctx.clearRect(0, 0, size, size);
+            // Draw circle clip
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+            ctx.clip();
+            // Background
+            ctx.fillStyle = '#f3f4f6';
+            ctx.fillRect(0, 0, size, size);
+            // Draw image scaled + offset
+            const sw = cropImg.width * scale;
+            const sh = cropImg.height * scale;
+            const dx = (size - sw)/2 + offsetX;
+            const dy = (size - sh)/2 + offsetY;
+            ctx.drawImage(cropImg, dx, dy, sw, sh);
+            ctx.restore();
+            // Circle border
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 1, 0, Math.PI*2);
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+        // Zoom slider
+        if (zoomSlider) {
+            zoomSlider.addEventListener('input', () => { scale = parseFloat(zoomSlider.value); drawCrop(); });
+        }
+
+        // Drag to reposition
+        canvas.addEventListener('mousedown', e => { dragging=true; lastX=e.clientX; lastY=e.clientY; });
+        window.addEventListener('mousemove', e => {
+            if (!dragging) return;
+            offsetX += e.clientX - lastX; offsetY += e.clientY - lastY;
+            lastX=e.clientX; lastY=e.clientY;
+            drawCrop();
+        });
+        window.addEventListener('mouseup', () => dragging=false);
+
+        // Touch support
+        canvas.addEventListener('touchstart', e => { dragging=true; lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; });
+        canvas.addEventListener('touchmove', e => {
+            if (!dragging) return;
+            e.preventDefault();
+            offsetX += e.touches[0].clientX - lastX; offsetY += e.touches[0].clientY - lastY;
+            lastX=e.touches[0].clientX; lastY=e.touches[0].clientY;
+            drawCrop();
+        }, {passive:false});
+        canvas.addEventListener('touchend', () => dragging=false);
+
+        // Close modal
+        document.getElementById('crop-close').addEventListener('click', () => overlay.style.display='none');
+        document.getElementById('btn-crop-cancel').addEventListener('click', () => overlay.style.display='none');
+
+        // Apply crop → submit form
+        document.getElementById('btn-crop-apply').addEventListener('click', () => {
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            // Convert canvas to blob → set on the file input via a hidden data field
+            document.getElementById('avatarCroppedData').value = dataUrl;
+            overlay.style.display = 'none';
+
+            // Update preview immediately
+            const preview = document.getElementById('cropPreviewImg');
+            if (preview.tagName === 'IMG') {
+                preview.src = dataUrl;
+            } else {
+                const img = document.createElement('img');
+                img.src = dataUrl; img.id = 'cropPreviewImg';
+                img.style.cssText = 'width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid #f59e0b;';
+                preview.replaceWith(img);
             }
-        </script>
-        <style>@@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }</style>
-    }
+            const banner = document.getElementById('profileBannerImg');
+            if (banner && banner.tagName === 'IMG') banner.src = dataUrl;
+
+            // Submit the hidden form — server reads croppedImageData
+            document.getElementById('avatarUploadForm').submit();
+        });
+    </script>
+
+    <style>
+        @@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    </style>
 }

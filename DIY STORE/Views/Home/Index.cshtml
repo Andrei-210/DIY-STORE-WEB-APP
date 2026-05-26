@@ -8,23 +8,48 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/style.css">
+    <style>
+        /* Category image - fixed height, fills frame, no overflow */
+        .category-card { overflow: hidden; }
+        .category-img-wrap {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            display: block;
+            flex-shrink: 0;
+        }
+        .category-img-wrap img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            padding: 0 !important;
+            display: block;
+            transform: none !important;
+        }
+        .category-card:hover .category-img-wrap img {
+            transform: scale(1.05) !important;
+        }
+        .fav-btn { background:none; border:none; font-size:1.4rem; line-height:1; padding:4px 6px; cursor:pointer; transition:transform .15s; z-index:2; }
+        .fav-btn:hover { transform:scale(1.2); }
+        .fav-btn .heart-icon { display:inline-block; width:22px; height:22px; }
+        .card .carousel-control-prev,.card .carousel-control-next { top:50%;transform:translateY(-50%);width:28px;height:28px;background:rgba(0,0,0,0.45);border-radius:50%;opacity:1;position:absolute; }
+        .card .carousel-control-prev { left:4px; }
+        .card .carousel-control-next { right:4px; }
+        .card .carousel-control-prev-icon,.card .carousel-control-next-icon { width:14px;height:14px; }
+        .card .carousel-inner img { max-height:180px;object-fit:contain;width:100%;padding:8px; }
+    </style>
 }
 
-<!-- HERO SECTION -->
 <section class="hero-section text-center">
     <div class="container">
         <h1 class="hero-title">Everything you need for your DIY projects</h1>
         <p class="hero-subtitle">Tools, materials, and accessories at the best prices</p>
-        <a asp-controller="Products" asp-action="Promotions" class="btn btn-warning btn-lg hero-btn">
-            Promotions
-        </a>
+        <a asp-controller="Products" asp-action="Promotions" class="btn btn-warning btn-lg hero-btn">Promotions</a>
     </div>
 </section>
 
-<!-- Toast container -->
 <div id="toast-container" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
 
-<!-- CATEGORII POPULARE -->
 <section class="categories-section container my-5">
     <h2 class="text-center mb-4">Popular Categories</h2>
     <div class="row g-4 justify-content-center">
@@ -37,8 +62,9 @@
             var catImg = string.IsNullOrEmpty(cat.Image) ? "placeholder.webp" : cat.Image;
             <div class="col-md-4">
                 <div class="card shadow-sm h-100 category-card">
-                    <img src="~/images/@catImg" class="card-img-top category-img" alt="@cat.Name"
-                         style="height:180px;object-fit:cover;">
+                    <div class="category-img-wrap">
+                        <img src="~/images/@catImg" alt="@cat.Name">
+                    </div>
                     <div class="card-body text-center">
                         <h5>@cat.Name</h5>
                         <a asp-controller="Categories" asp-action="Index" asp-route-cat="@cat.Slug"
@@ -50,7 +76,6 @@
     </div>
 </section>
 
-<!-- PRODUSE RECOMANDATE -->
 <section class="products-section bg-light py-5">
     <div class="container">
         <h2 class="text-center mb-4">Featured Products</h2>
@@ -61,9 +86,12 @@
             }
             @foreach (var product in featuredProducts)
             {
-                var img = product.Images.FirstOrDefault()?.ImagePath ?? "placeholder.webp";
-                img = img.Replace("images/", "");
+                var images = product.Images.ToList();
+                var firstImg = images.FirstOrDefault()?.ImagePath ?? "placeholder.webp";
+                firstImg = firstImg.Replace("images/", "");
                 bool isFav = favoriteIds.Contains(product.Id);
+                var cardCarouselId = $"carousel-home-{product.Id}";
+
                 <div class="col-md-3">
                     <div class="card shadow-sm h-100 product-card text-center position-relative">
                         @if (product.IsOnSale)
@@ -72,13 +100,46 @@
                         }
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
-                            <button class="fav-btn position-absolute top-0 start-0 m-1 @(isFav ? "active" : "")"
-                                    style="z-index:2;background:none;border:none;font-size:1.3rem;line-height:1;padding:4px 6px;color:@(isFav ? "#dc3545" : "#aaa");"
+                            <button class="fav-btn position-absolute top-0 start-0 m-1"
                                     data-product-id="@product.Id"
                                     title="Toggle favorite"
-                                    onclick="toggleFavorite(this, @product.Id)">❤</button>
+                                    onclick="toggleFavorite(this, @product.Id)">
+                                @if (isFav)
+                                {
+                                    <svg class="heart-icon" viewBox="0 0 24 24" fill="#dc3545" stroke="#dc3545" stroke-width="1.5"><path d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.81 3.85 12 5C12.19 3.85 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 12 21 12 21Z"/></svg>
+                                }
+                                else
+                                {
+                                    <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.81 3.85 12 5C12.19 3.85 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 12 21 12 21Z"/></svg>
+                                }
+                            </button>
                         }
-                        <img src="~/images/@img" class="card-img-top p-2" style="max-height:180px;object-fit:contain;" alt="@product.Name">
+
+                        @if (images.Count > 1)
+                        {
+                            <div id="@cardCarouselId" class="carousel slide" data-bs-ride="false">
+                                <div class="carousel-inner">
+                                    @for (int i = 0; i < images.Count; i++)
+                                    {
+                                        var ip = images[i].ImagePath.Replace("images/", "");
+                                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                                            <img src="~/images/@ip" class="d-block" alt="@product.Name">
+                                        </div>
+                                    }
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#@cardCarouselId" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#@cardCarouselId" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <img src="~/images/@firstImg" class="card-img-top p-2" style="max-height:180px;object-fit:contain;" alt="@product.Name">
+                        }
+
                         <div class="card-body d-flex flex-column">
                             <h6 class="card-title">@product.Name</h6>
                             @if (product.OldPrice.HasValue)
@@ -87,13 +148,14 @@
                             }
                             <p class="fw-bold text-warning mb-2">@product.Price.ToString("0.00") RON</p>
                             <div class="d-flex gap-1 mt-auto">
-                                <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id"
+                                <a asp-controller="Products" asp-action="Details" asp-route-slug="@product.Slug"
                                    class="btn btn-outline-secondary btn-sm flex-fill rounded-pill">View</a>
                                 <button class="btn btn-warning btn-sm flex-fill rounded-pill add-to-cart-btn"
                                         data-product-id="@product.Id"
                                         data-product-name="@product.Name"
                                         data-product-price="@product.Price"
-                                        data-product-image="images/@img">
+                                        data-product-image="images/@firstImg"
+                                        data-stock="@product.Stock">
                                     Add to Cart
                                 </button>
                             </div>
@@ -111,40 +173,28 @@
     @inject IAntiforgery Antiforgery
     @{ var tokens = Antiforgery.GetAndStoreTokens(Context); }
     <input type="hidden" name="__RequestVerificationToken" value="@tokens.RequestToken" id="global-csrf-token">
-
     <script>
-        function getToken() {
-            return document.getElementById('global-csrf-token')?.value || '';
+        function getToken() { return document.getElementById('global-csrf-token')?.value || ''; }
+        function showToast(msg, type="success") {
+            const c=document.getElementById("toast-container");
+            const t=document.createElement("div");
+            t.className=`alert alert-${type} shadow mb-0`;
+            t.style.cssText="min-width:280px;animation:fadeIn .3s;";
+            t.textContent=msg; c.appendChild(t);
+            setTimeout(()=>{t.style.opacity=0;t.style.transition="opacity .4s";},2800);
+            setTimeout(()=>t.remove(),3200);
         }
-
-        function showToast(msg, type = "success") {
-            const c = document.getElementById("toast-container");
-            const t = document.createElement("div");
-            t.className = `alert alert-${type} shadow mb-0`;
-            t.style.cssText = "min-width:280px;animation:fadeIn .3s;";
-            t.textContent = msg;
-            c.appendChild(t);
-            setTimeout(() => { t.style.opacity = 0; t.style.transition = "opacity .4s"; }, 2800);
-            setTimeout(() => t.remove(), 3200);
-        }
-
+        const HEART_FILLED=`<svg class="heart-icon" viewBox="0 0 24 24" fill="#dc3545" stroke="#dc3545" stroke-width="1.5"><path d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.81 3.85 12 5C12.19 3.85 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 12 21 12 21Z"/></svg>`;
+        const HEART_OUTLINE=`<svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8"><path d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.81 3.85 12 5C12.19 3.85 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 12 21 12 21Z"/></svg>`;
         async function toggleFavorite(btn, productId) {
-            const tok = getToken();
-            if (!tok) { window.location = '/Account/Login'; return; }
+            const tok=getToken();
+            if(!tok){window.location='/Account/Login';return;}
             try {
-                const r = await fetch('/Products/ToggleFavorite', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
-                    body: `productId=${productId}&__RequestVerificationToken=${encodeURIComponent(tok)}`
-                });
-                const d = await r.json();
-                if (d.success) {
-                    btn.classList.toggle('active', d.isFavorite);
-                    btn.style.color = d.isFavorite ? '#dc3545' : '#aaa';
-                    showToast(d.isFavorite ? '❤ Added to favorites!' : '💔 Removed from favorites!', d.isFavorite ? 'success' : 'warning');
-                }
-            } catch { showToast('Error. Please try again.', 'danger'); }
+                const r=await fetch('/Products/ToggleFavorite',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/json'},body:`productId=${productId}&__RequestVerificationToken=${encodeURIComponent(tok)}`});
+                const d=await r.json();
+                if(d.success){btn.innerHTML=d.isFavorite?HEART_FILLED:HEART_OUTLINE;showToast(d.isFavorite?'❤ Added to favorites!':'💔 Removed from favorites!',d.isFavorite?'success':'warning');}
+            } catch{showToast('Error. Please try again.','danger');}
         }
     </script>
-    <style>@@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }</style>
+    <style>@@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}</style>
 }

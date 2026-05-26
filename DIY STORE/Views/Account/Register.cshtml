@@ -1,54 +1,169 @@
 @model DIY_STORE.Models.RegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Create Account";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="~/css/patch.css">
+    <style>
+        .auth-wrapper {
+            min-height: calc(100vh - 140px);
+            display: flex; align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 2rem 0;
+        }
+        .auth-card {
+            background: #fff; border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden;
+        }
+        .auth-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            padding: 1.75rem 2rem; text-align: center; color: #fff;
+        }
+        .auth-header .store-logo {
+            font-size: 1.8rem; font-weight: 800;
+            letter-spacing: 2px; margin-bottom: 0.25rem;
+        }
+        .auth-header p { opacity: 0.9; margin: 0; font-size: 0.95rem; }
+        .auth-body { padding: 2rem 2.5rem 2.5rem; }
+        .form-floating > .form-control {
+            border-radius: 10px; border: 1.5px solid #e5e7eb;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-floating > .form-control:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+        }
+        .btn-register {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none; border-radius: 10px; color: #fff;
+            font-weight: 600; font-size: 1rem; padding: 0.75rem;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-register:hover { opacity: 0.92; transform: translateY(-1px); color: #fff; }
+
+        /* Avatar upload area */
+        .avatar-upload-area {
+            border: 2px dashed #d97706; border-radius: 12px;
+            padding: 1.25rem; text-align: center; cursor: pointer;
+            transition: background 0.2s; background: #fffbeb;
+        }
+        .avatar-upload-area:hover { background: #fef3c7; }
+        .avatar-preview {
+            width: 80px; height: 80px; border-radius: 50%;
+            object-fit: cover; border: 3px solid #f59e0b;
+            display: none; margin: 0 auto 0.5rem;
+        }
+        .avatar-placeholder { font-size: 2.5rem; line-height: 1; margin-bottom: 0.4rem; }
+        .avatar-upload-area label { color: #92400e; font-size: 0.85rem; cursor: pointer; margin: 0; }
+
+        .divider {
+            display: flex; align-items: center; gap: 0.75rem;
+            color: #9ca3af; font-size: 0.85rem; margin: 1.25rem 0;
+        }
+        .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #e5e7eb; }
+        .auth-footer-link { color: #6b7280; font-size: 0.9rem; text-align: center; }
+        .auth-footer-link a { color: #d97706; font-weight: 600; text-decoration: none; }
+        .auth-footer-link a:hover { text-decoration: underline; }
+    </style>
 }
 
-<div class="container mt-5 mb-5">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card shadow-sm p-4">
-                <h3 class="text-center mb-4">Create Account</h3>
-
-                <form asp-controller="Account" asp-action="Register" method="post">
-                    @Html.AntiForgeryToken()
-
-                    <div class="mb-3">
-                        <label class="form-label">Username</label>
-                        <input asp-for="Username" class="form-control" required>
-                        <span asp-validation-for="Username" class="text-danger small"></span>
+<div class="auth-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="store-logo">🔧 DIY STORE</div>
+                        <p>Create your free account and start shopping.</p>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input asp-for="Email" class="form-control" required>
-                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    <div class="auth-body">
+
+                        @* Validation summary *@
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3"
+                             style="@(!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0) ? "" : "display:none;")">
+                        </div>
+
+                        <form asp-controller="Account" asp-action="Register" method="post"
+                              enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+
+                            @* Profile picture *@
+                            <div class="avatar-upload-area mb-4"
+                                 onclick="document.getElementById('profilePicInput').click()">
+                                <img id="avatarPreview" class="avatar-preview" src="#" alt="Preview" />
+                                <div id="avatarPlaceholder">
+                                    <div class="avatar-placeholder">👤</div>
+                                    <label>Click to upload a profile picture
+                                        <span class="text-muted">(optional)</span>
+                                    </label>
+                                </div>
+                                <input type="file" id="profilePicInput" name="ProfilePicture"
+                                       accept="image/*" style="display:none"
+                                       onchange="previewAvatar(this)">
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Username" class="form-control" id="usernameInput"
+                                       placeholder="JohnDoe" autofocus autocomplete="username">
+                                <label for="usernameInput">👤 Username</label>
+                                <span asp-validation-for="Username" class="field-validation-error"></span>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Email" class="form-control" id="emailInput"
+                                       placeholder="name@example.com" autocomplete="email">
+                                <label for="emailInput">📧 Email address</label>
+                                <span asp-validation-for="Email" class="field-validation-error"></span>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Address" class="form-control" id="addressInput"
+                                       placeholder="123 Main St, City">
+                                <label for="addressInput">📍 Delivery address</label>
+                                <span asp-validation-for="Address" class="field-validation-error"></span>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input asp-for="Password" class="form-control" id="passwordInput"
+                                       placeholder="Password" autocomplete="new-password">
+                                <label for="passwordInput">🔒 Password</label>
+                                <span asp-validation-for="Password" class="field-validation-error"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-register w-100">
+                                Create Account →
+                            </button>
+                        </form>
+
+                        <div class="divider">already a member?</div>
+
+                        <p class="auth-footer-link">
+                            <a asp-controller="Account" asp-action="Login">Log in to your account</a>
+                        </p>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Address</label>
-                        <input asp-for="Address" class="form-control" required>
-                        <span asp-validation-for="Address" class="text-danger small"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input asp-for="Password" class="form-control" required>
-                        <span asp-validation-for="Password" class="text-danger small"></span>
-                    </div>
-
-                    <button type="submit" class="btn btn-warning w-100">Register</button>
-                </form>
-
-                <div class="text-center mt-3">
-                    <small>Already have an account?
-                        <a asp-controller="Account" asp-action="Login">Log in</a>
-                    </small>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function previewAvatar(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const preview = document.getElementById('avatarPreview');
+                    const placeholder = document.getElementById('avatarPlaceholder');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

@@ -18,7 +18,6 @@
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th>#</th>
                     <th>Name</th>
                     <th>Price</th>
                     <th>Stock</th>
@@ -31,15 +30,14 @@
                 @foreach (var p in Model)
                 {
                     <tr>
-                        <td>@p.Id</td>
-                        <td>@p.Name</td>
+                        <td>@p.Name<br><code class="small text-muted">@p.Slug</code></td>
                         <td>@p.Price.ToString("0.00") RON</td>
                         <td>@p.Stock</td>
                         <td>@p.Subcategory?.Category?.Name / @p.Subcategory?.Name</td>
                         <td>@(p.IsOnSale ? "✅" : "—")</td>
                         <td>
-                            <a asp-action="EditProduct" asp-route-id="@p.Id" class="btn btn-sm btn-warning">Edit</a>
-                            <a asp-action="DeleteProduct" asp-route-id="@p.Id" class="btn btn-sm btn-danger">Delete</a>
+                            <a asp-action="EditProduct" asp-route-slug="@p.Slug" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="DeleteProduct" asp-route-slug="@p.Slug" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
                 }

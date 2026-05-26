@@ -21,6 +21,71 @@
             padding: 1.5rem;
             position: relative;
         }
+        /* Custom product carousel - fixed height, no Bootstrap conflicts */
+        #productCarousel {
+            position: relative;
+            height: 380px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #productCarousel .pc-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        #productCarousel .pc-item {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+        #productCarousel .pc-item.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #productCarousel .pc-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        #productCarousel .pc-prev,
+        #productCarousel .pc-next {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.45);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px; height: 40px;
+            font-size: 1.5rem;
+            line-height: 0;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background .2s;
+        }
+        #productCarousel .pc-prev:hover,
+        #productCarousel .pc-next:hover { background: rgba(0,0,0,0.7); }
+        #productCarousel .pc-prev { left: 8px; }
+        #productCarousel .pc-next { right: 8px; }
+        #productCarousel .pc-dots {
+            position: absolute;
+            bottom: 8px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 5px; z-index: 10;
+        }
+        #productCarousel .pc-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.6);
+            cursor: pointer;
+            transition: background .2s;
+        }
+        #productCarousel .pc-dot.active { background: #fff; }
         /* Carousel arrows at center of image, visible */
         #productCarousel .carousel-control-prev,
         #productCarousel .carousel-control-next {
@@ -109,28 +174,27 @@
                     <div class="product-gallery">
                         @if (Model.Images.Any())
                         {
-                            <div id="productCarousel" class="carousel slide" data-bs-ride="false">
-                                <div class="carousel-inner">
-                                    @{ bool first = true; }
+                            <div id="productCarousel">
+                                <div class="pc-inner">
+                                    @{ int imgIdx = 0; }
                                     @foreach (var img in Model.Images)
                                     {
-                                        <div class="carousel-item @(first ? "active" : "")">
-                                            <img src="~/images/@img.ImagePath.Replace("images/","")"
-                                                 class="d-block w-100"
-                                                 style="max-height:380px;object-fit:contain;"
-                                                 alt="@Model.Name">
+                                        <div class="pc-item @(imgIdx == 0 ? "active" : "")" data-index="@imgIdx">
+                                            <img src="~/images/@img.ImagePath.Replace("images/","")" alt="@Model.Name">
                                         </div>
-                                        first = false;
+                                        imgIdx++;
                                     }
                                 </div>
                                 @if (Model.Images.Count > 1)
                                 {
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon"></span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon"></span>
-                                    </button>
+                                    <button class="pc-prev" onclick="pcSlide(-1)" type="button">&#8249;</button>
+                                    <button class="pc-next" onclick="pcSlide(1)" type="button">&#8250;</button>
+                                    <div class="pc-dots">
+                                        @for (int d = 0; d < Model.Images.Count; d++)
+                                        {
+                                            <span class="pc-dot @(d == 0 ? "active" : "")" onclick="pcGoTo(@d)"></span>
+                                        }
+                                    </div>
                                 }
                             </div>
                         }
@@ -317,13 +381,16 @@
                                     <h6 class="card-title small fw-semibold">@p.Name</h6>
                                     <p class="text-warning fw-bold mb-2">@p.Price.ToString("0.00") RON</p>
                                     <div class="d-flex gap-1 mt-auto">
-                                        <a asp-controller="Products" asp-action="Details" asp-route-id="@p.Id"
+                                        <a asp-controller="Products" asp-action="Details" asp-route-slug="@p.Slug"
                                            class="btn btn-outline-warning btn-sm flex-fill">View</a>
                                         <button class="btn btn-warning btn-sm add-to-cart-btn"
                                                 data-product-id="@p.Id"
                                                 data-product-name="@p.Name"
                                                 data-product-price="@p.Price"
-                                                data-product-image="images/@img2.Replace("images/","")">🛒</button>
+                                                data-product-image="images/@img2.Replace("images/","")"
+                                                data-stock="@p.Stock">
+                                            🛒
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -372,26 +439,41 @@
             {
                 <div class="border-top pt-4">
                     <h5 class="fw-bold mb-3">Write a Review</h5>
+                    @if (TempData["ReviewError"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ReviewError"]</div>
+                    }
+                    @{
+                        var reviewModel = new DIY_STORE.Models.Review { ProductId = Model.Id };
+                    }
                     <form asp-controller="Products" asp-action="AddReview" method="post">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="ProductId" value="@Model.Id" />
                         <div class="row g-3">
                             <div class="col-md-3">
-                                <label class="form-label fw-semibold">Rating</label>
-                                <select name="Rating" class="form-select">
+                                <label class="form-label fw-semibold">Rating <span class="text-danger">*</span></label>
+                                <select name="Rating" class="form-select" required>
+                                    <option value="">– Select –</option>
                                     @for (int i = 5; i >= 1; i--)
                                     {
                                         <option value="@i">@i ★</option>
                                     }
                                 </select>
+                                <span class="text-danger small" id="rating-error"></span>
                             </div>
                             <div class="col-md-9">
-                                <label class="form-label fw-semibold">Title</label>
-                                <input type="text" name="Title" class="form-control" required>
+                                <label class="form-label fw-semibold">Title <span class="text-danger">*</span></label>
+                                <input type="text" name="Title" class="form-control"
+                                       minlength="2" maxlength="150" required
+                                       placeholder="Summarize your experience">
+                                <div class="form-text">2–150 characters</div>
                             </div>
                             <div class="col-12">
-                                <label class="form-label fw-semibold">Comment</label>
-                                <textarea name="Comment" class="form-control" rows="3" required></textarea>
+                                <label class="form-label fw-semibold">Comment <span class="text-danger">*</span></label>
+                                <textarea name="Comment" class="form-control" rows="3"
+                                          minlength="5" maxlength="1000" required
+                                          placeholder="Share your experience with this product"></textarea>
+                                <div class="form-text">5–1000 characters</div>
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-warning px-4">Submit Review</button>
@@ -407,6 +489,24 @@
 
 @section Scripts {
     <script src="~/js/cart.js"></script>
+    <script>
+        // Custom product image carousel
+        let pcCurrent = 0;
+        const pcItems = () => document.querySelectorAll('#productCarousel .pc-item');
+        const pcDots  = () => document.querySelectorAll('#productCarousel .pc-dot');
+
+        function pcGoTo(idx) {
+            const items = pcItems(), dots = pcDots();
+            if (!items.length) return;
+            items[pcCurrent].classList.remove('active');
+            if (dots[pcCurrent]) dots[pcCurrent].classList.remove('active');
+            pcCurrent = (idx + items.length) % items.length;
+            items[pcCurrent].classList.add('active');
+            if (dots[pcCurrent]) dots[pcCurrent].classList.add('active');
+        }
+
+        function pcSlide(dir) { pcGoTo(pcCurrent + dir); }
+    </script>
     @using Microsoft.AspNetCore.Antiforgery
     @inject IAntiforgery Antiforgery
     @{ var tokens = Antiforgery.GetAndStoreTokens(Context); }
@@ -436,7 +536,7 @@
         }
 
         async function addToCartDetail(productId, productName) {
-            const qty = document.getElementById('qty-input')?.value || 1;
+            const qty = parseInt(document.getElementById('qty-input')?.value || 1);
             const tok = getToken();
             try {
                 const r = await fetch('/Cart/Add', {
@@ -444,15 +544,20 @@
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
                     body: `productId=${productId}&quantity=${qty}&__RequestVerificationToken=${encodeURIComponent(tok)}`
                 });
-                if (r.ok) {
-                    showToast(`🛒 "${productName}" added to cart!`, 'success');
-                    try {
-                        const data = await r.json();
-                        const badge = document.getElementById('cart-count');
-                        if (badge && data.count !== undefined) badge.textContent = data.count;
-                    } catch {}
+                const data = await r.json();
+                if (data.success) {
+                    const badge = document.getElementById('cart-count');
+                    if (badge) { badge.textContent = data.count; badge.style.display = data.count > 0 ? '' : 'none'; }
+                    showToast('Added to cart!', 'success');
+                    if (typeof showCartModal === 'function') {
+                        const imgEl = document.querySelector('#productCarousel .pc-item.active img');
+                        const imgSrc = imgEl ? imgEl.src : '/images/placeholder.webp';
+                        const priceEl = document.querySelector('.price-tag');
+                        const price = priceEl ? priceEl.textContent.trim() : '';
+                        showCartModal(productName, price, imgSrc);
+                    }
                 } else {
-                    showToast('Error adding to cart.', 'danger');
+                    showToast(data.message || 'Could not add to cart.', 'danger');
                 }
             } catch { showToast('Connection error.', 'danger'); }
         }
@@ -477,4 +582,5 @@
         }
     </script>
     <style>@@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }</style>
+    <partial name="_ValidationScriptsPartial" />
 }

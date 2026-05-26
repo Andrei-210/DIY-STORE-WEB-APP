@@ -1,44 +1,120 @@
+@model DIY_STORE.Models.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="~/css/patch.css">
+    <style>
+        .auth-wrapper {
+            min-height: calc(100vh - 140px);
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .auth-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .auth-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            padding: 2rem;
+            text-align: center;
+            color: #fff;
+        }
+        .auth-header .store-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 0.25rem;
+        }
+        .auth-header p { opacity: 0.9; margin: 0; font-size: 0.95rem; }
+        .auth-body { padding: 2rem 2.5rem 2.5rem; }
+        .form-floating > .form-control {
+            border-radius: 10px;
+            border: 1.5px solid #e5e7eb;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-floating > .form-control:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none; border-radius: 10px; color: #fff;
+            font-weight: 600; font-size: 1rem; padding: 0.75rem;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-login:hover { opacity: 0.92; transform: translateY(-1px); color: #fff; }
+        .btn-login:active { transform: translateY(0); }
+        .divider {
+            display: flex; align-items: center; gap: 0.75rem;
+            color: #9ca3af; font-size: 0.85rem; margin: 1.25rem 0;
+        }
+        .divider::before, .divider::after {
+            content: ""; flex: 1; height: 1px; background: #e5e7eb;
+        }
+        .auth-footer-link { color: #6b7280; font-size: 0.9rem; text-align: center; }
+        .auth-footer-link a { color: #d97706; font-weight: 600; text-decoration: none; }
+        .auth-footer-link a:hover { text-decoration: underline; }
+    </style>
 }
 
-<div class="container mt-5 mb-5">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card shadow-sm p-4">
-                <h3 class="text-center mb-4">Log In</h3>
-
-                @if (!string.IsNullOrEmpty(ViewBag.Error))
-                {
-                    <div class="alert alert-danger">@ViewBag.Error</div>
-                }
-
-                <form asp-controller="Account" asp-action="Login" method="post">
-                    @Html.AntiForgeryToken()
-
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="Email" required autofocus>
+<div class="auth-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-lg-4">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="store-logo">🔧 DIY STORE</div>
+                        <p>Welcome back! Log in to your account.</p>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" name="Password" required>
+                    <div class="auth-body">
+
+                        @* Validation summary - shown only when there are errors *@
+                        <div asp-validation-summary="All" class="alert alert-danger py-2 mb-3"
+                             style="@(!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0) ? "" : "display:none;")">
+                        </div>
+
+                        <form asp-controller="Account" asp-action="Login" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Email" class="form-control" id="emailInput" type="text"
+                                       placeholder="Email address or username" autofocus autocomplete="username">
+                                <label for="emailInput">📧 Email or username</label>
+                                <span asp-validation-for="Email" class="field-validation-error"></span>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input asp-for="Password" class="form-control" id="passwordInput"
+                                       placeholder="Password" autocomplete="current-password">
+                                <label for="passwordInput">🔒 Password</label>
+                                <span asp-validation-for="Password" class="field-validation-error"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-login w-100">
+                                Log In →
+                            </button>
+                        </form>
+
+                        <div class="divider">or</div>
+
+                        <p class="auth-footer-link">
+                            Don't have an account?
+                            <a asp-controller="Account" asp-action="Register">Create one for free</a>
+                        </p>
                     </div>
-
-                    <button type="submit" class="btn btn-warning w-100">Log In</button>
-                </form>
-
-                <div class="text-center mt-3">
-                    <small>Don't have an account?
-                        <a asp-controller="Account" asp-action="Register">Register</a>
-                    </small>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,10 +1,10 @@
 using DIY_STORE.Models;
+using DIY_STORE.Repositories;
 using DIY_STORE.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using DIY_STORE.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace DIY_STORE.Controllers
 {
@@ -15,7 +15,7 @@ namespace DIY_STORE.Controllers
         private readonly IReviewService _reviewService;
         private readonly ICategoryService _categoryService;
         private readonly IShopService _shopService;
-        private readonly ApplicationDbContext _db;
+        private readonly IProductShopAvailabilityRepository _shopAvailRepo;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public ProductsController(IProductService productService,
@@ -23,7 +23,7 @@ namespace DIY_STORE.Controllers
             IReviewService reviewService,
             ICategoryService categoryService,
             IShopService shopService,
-            ApplicationDbContext db,
+            IProductShopAvailabilityRepository shopAvailRepo,
             UserManager<ApplicationUser> userManager)
         {
             _productService = productService;
@@ -31,7 +31,7 @@ namespace DIY_STORE.Controllers
             _reviewService = reviewService;
             _categoryService = categoryService;
             _shopService = shopService;
-            _db = db;
+            _shopAvailRepo = shopAvailRepo;
             _userManager = userManager;
         }
 
@@ -48,18 +48,16 @@ namespace DIY_STORE.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(string slug)
         {
-            var product = await _productService.GetProductDetailAsync(id);
+            var product = await _productService.GetProductBySlugAsync(slug);
             if (product == null) return NotFound();
 
-            ViewBag.SimilarProducts = await _productService.GetSimilarProductsAsync(id, product.SubcategoryId);
+            ViewBag.SimilarProducts = await _productService.GetSimilarProductsAsync(product.Id, product.SubcategoryId);
 
             // Shop availability
             var allShops = (await _shopService.GetAllShopsAsync()).ToList();
-            var availabilities = await _db.ProductShopAvailabilities
-                .Where(a => a.ProductId == id)
-                .ToListAsync();
+            var availabilities = await _shopAvailRepo.GetByProductIdAsync(product.Id);
             var availDict = availabilities.ToDictionary(a => a.ShopId, a => a.InStock);
 
             ViewBag.AllShops = allShops;
@@ -68,7 +66,7 @@ namespace DIY_STORE.Controllers
             if (User.Identity?.IsAuthenticated == true)
             {
                 var userId = _userManager.GetUserId(User)!;
-                ViewBag.IsFavorite = await _favoriteService.IsFavoriteAsync(userId, id);
+                ViewBag.IsFavorite = await _favoriteService.IsFavoriteAsync(userId, product.Id);
             }
             else
             {
@@ -107,27 +105,28 @@ namespace DIY_STORE.Controllers
             {
                 return Json(new { success = true, isFavorite = isFav });
             }
-            return RedirectToAction(nameof(Details), new { id = productId });
+            // redirect back to product details by slug
+            var product = await _productService.GetProductDetailAsync(productId);
+            return RedirectToAction(nameof(Details), new { slug = product?.Slug ?? productId.ToString() });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> AddReview(int ProductId, int Rating, string Title, string Comment)
+        public async Task<IActionResult> AddReview(Review review)
         {
-            var userId = _userManager.GetUserId(User)!;
-            var review = new Review
+            if (!ModelState.IsValid)
             {
-                ProductId = ProductId,
-                UserId = userId,
-                Rating = Rating,
-                Title = Title,
-                Comment = Comment,
-                Date = DateTime.Now
-            };
+                TempData["ReviewError"] = "Please fill in all required review fields correctly.";
+                var p = await _productService.GetProductDetailAsync(review.ProductId);
+                return RedirectToAction(nameof(Details), new { slug = p?.Slug ?? review.ProductId.ToString() });
+            }
+            review.UserId = _userManager.GetUserId(User)!;
+            review.Date = DateTime.Now;
             await _reviewService.AddReviewAsync(review);
-            TempData["ReviewSuccess"] = "✅ Review adăugat cu succes!";
-            return RedirectToAction(nameof(Details), new { id = ProductId });
+            TempData["ReviewSuccess"] = "✅ Review submitted successfully!";
+            var product = await _productService.GetProductDetailAsync(review.ProductId);
+            return RedirectToAction(nameof(Details), new { slug = product?.Slug ?? review.ProductId.ToString() });
         }
 
         private async Task SetFavoriteIds()

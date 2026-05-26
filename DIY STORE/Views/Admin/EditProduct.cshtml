@@ -8,7 +8,7 @@
 <div class="container py-5">
     <h2 class="mb-4">✏️ Edit Product: @Model.Name</h2>
     <div class="card shadow-sm p-4" style="max-width:700px;">
-        <form asp-action="EditProduct" method="post">
+        <form asp-action="EditProduct" asp-route-slug="@Model.Slug" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <input type="hidden" asp-for="Id" />
             @{

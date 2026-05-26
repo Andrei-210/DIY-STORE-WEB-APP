@@ -11,7 +11,7 @@
         </dl>
         <form asp-action="DeleteProduct" method="post" class="d-flex gap-2 mt-3">
             @Html.AntiForgeryToken()
-            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="slug" value="@Model.Slug" />
             <button type="submit" class="btn btn-danger">Yes, Delete</button>
             <a asp-action="Products" class="btn btn-outline-secondary">Cancel</a>
         </form>

@@ -36,11 +36,11 @@
                             <p><strong>Email:</strong> <a href="mailto:@shop.Email">@shop.Email</a></p>
                         </div>
                         <div class="card-footer d-flex gap-2">
-                            <a asp-action="Details" asp-route-id="@shop.Id" class="btn btn-outline-dark btn-sm">Details</a>
+                            <a asp-action="Details" asp-route-slug="@shop.Slug" class="btn btn-outline-dark btn-sm">Details</a>
                             @if (User.IsInRole("Admin"))
                             {
-                                <a asp-action="Edit" asp-route-id="@shop.Id" class="btn btn-warning btn-sm">Edit</a>
-                                <a asp-action="Delete" asp-route-id="@shop.Id" class="btn btn-danger btn-sm">Delete</a>
+                                <a asp-action="Edit" asp-route-slug="@shop.Slug" class="btn btn-warning btn-sm">Edit</a>
+                                <a asp-action="Delete" asp-route-slug="@shop.Slug" class="btn btn-danger btn-sm">Delete</a>
                             }
                         </div>
                     </div>

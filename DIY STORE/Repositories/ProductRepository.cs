@@ -96,6 +96,14 @@ namespace DIY_STORE.Repositories
                 .Include(p => p.Reviews).ThenInclude(r => r.User)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
+        public async Task<Product?> GetBySlugAsync(string slug)
+            => await _context.Products
+                .Include(p => p.Subcategory).ThenInclude(s => s.Category)
+                .Include(p => p.Images)
+                .Include(p => p.Specifications)
+                .Include(p => p.Reviews).ThenInclude(r => r.User)
+                .FirstOrDefaultAsync(p => p.Slug == slug);
+
         public async Task<IEnumerable<Product>> GetSimilarAsync(int productId, int subcategoryId, int count = 4)
             => await _context.Products
                 .Include(p => p.Images)
@@ -119,6 +127,17 @@ namespace DIY_STORE.Repositories
 
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Updates ONLY the Stock column — does NOT touch images or other fields.
+        /// Use this instead of UpdateAsync when only deducting stock.
+        /// </summary>
+        public async Task UpdateStockAsync(int productId, int newStock)
+        {
+            await _context.Products
+                .Where(p => p.Id == productId)
+                .ExecuteUpdateAsync(s => s.SetProperty(p => p.Stock, newStock));
         }
 
         public async Task DeleteAsync(int id)

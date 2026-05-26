@@ -8,7 +8,7 @@
 <div class="container py-5">
     <h2 class="mb-4">➕ Create Subcategory</h2>
     <div class="card shadow-sm p-4" style="max-width:500px;">
-        <form asp-action="CreateSubcategory" method="post">
+        <form asp-action="CreateSubcategory" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <div class="mb-3">
                 <label asp-for="CategoryId" class="form-label">Parent Category</label>
@@ -27,8 +27,9 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Image" class="form-label">Image (optional)</label>
-                <input asp-for="Image" class="form-control" placeholder="e.g. electric-saw.png">
+                <label class="form-label">Image (optional)</label>
+                <input type="file" name="ImageFile" class="form-control" accept="image/*">
+                <div class="form-text">Upload an image from your computer.</div>
             </div>
             <button type="submit" class="btn btn-warning w-100">Create Subcategory</button>
         </form>

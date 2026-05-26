@@ -10,20 +10,27 @@ namespace DIY_STORE.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IAccountService _accountService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IOrderService _orderService;
         private readonly IFavoriteService _favoriteService;
+        private readonly IWebHostEnvironment _env;
 
-        public AccountController(UserManager<ApplicationUser> userManager,
+        public AccountController(
+            IAccountService accountService,
+            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOrderService orderService,
-            IFavoriteService favoriteService)
+            IFavoriteService favoriteService,
+            IWebHostEnvironment env)
         {
+            _accountService = accountService;
             _userManager = userManager;
             _signInManager = signInManager;
             _orderService = orderService;
             _favoriteService = favoriteService;
+            _env = env;
         }
 
         // GET /Account/Login
@@ -44,8 +51,7 @@ namespace DIY_STORE.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var result = await _signInManager.PasswordSignInAsync(
-                model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await _accountService.LoginAsync(model);
 
             if (result.Succeeded)
             {
@@ -75,19 +81,13 @@ namespace DIY_STORE.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = new ApplicationUser
-            {
-                UserName = model.Email,
-                Email = model.Email,
-                Address = model.Address
-            };
+            var (result, user) = await _accountService.RegisterAsync(model);
 
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
+            if (result.Succeeded && user != null)
             {
-                await _userManager.AddToRoleAsync(user, "Customer");
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                if (model.ProfilePicture != null)
+                    await _accountService.UploadProfilePictureAsync(user.Id, model.ProfilePicture, _env.WebRootPath);
+
                 return RedirectToAction("Profile");
             }
 
@@ -102,7 +102,7 @@ namespace DIY_STORE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _accountService.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
 
@@ -111,8 +111,7 @@ namespace DIY_STORE.Controllers
         public async Task<IActionResult> Profile(string section = "account")
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-                return RedirectToAction("Login");
+            if (user == null) return RedirectToAction("Login");
 
             var orders = await _orderService.GetUserOrdersAsync(user.Id);
             var favorites = await _favoriteService.GetUserFavoritesAsync(user.Id);
@@ -122,6 +121,7 @@ namespace DIY_STORE.Controllers
                 Email = user.Email ?? string.Empty,
                 UserName = user.UserName,
                 Address = user.Address,
+                ProfilePicturePath = user.ProfilePicturePath,
                 ActiveSection = section,
                 Orders = orders.ToList(),
                 Favorites = favorites.ToList()
@@ -131,9 +131,88 @@ namespace DIY_STORE.Controllers
         }
 
         // GET /Account/AccessDenied
-        public IActionResult AccessDenied()
+        public IActionResult AccessDenied() => View();
+
+        // POST /Account/UpdateProfile
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateProfile(
+            string? newUsername, string? newEmail, string? newAddress,
+            string? currentPassword, string? newPassword, string? confirmPassword,
+            IFormFile? profilePicture, string? croppedImageData)
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login");
+
+            var errors  = new List<string>();
+            var success = new List<string>();
+
+            // 1. Cropped image from canvas (takes priority over file input)
+            if (!string.IsNullOrEmpty(croppedImageData))
+            {
+                var path = await _accountService.UploadCroppedProfilePictureAsync(user.Id, croppedImageData, _env.WebRootPath);
+                if (path != null) success.Add("Profile picture updated.");
+                else errors.Add("Could not save the cropped image.");
+            }
+            // 2. Plain file upload (fallback)
+            else if (profilePicture != null && profilePicture.Length > 0)
+            {
+                var path = await _accountService.UploadProfilePictureAsync(user.Id, profilePicture, _env.WebRootPath);
+                if (path != null) success.Add("Profile picture updated.");
+                else errors.Add("Invalid image file. Allowed: jpg, jpeg, png, gif, webp.");
+            }
+
+            // 3. Username
+            if (!string.IsNullOrWhiteSpace(newUsername) && newUsername != user.UserName)
+            {
+                var r = await _userManager.SetUserNameAsync(user, newUsername);
+                if (r.Succeeded) success.Add("Username updated.");
+                else errors.AddRange(r.Errors.Select(e => e.Description));
+            }
+
+            // 4. Email
+            if (!string.IsNullOrWhiteSpace(newEmail) && newEmail != user.Email)
+            {
+                var r = await _userManager.SetEmailAsync(user, newEmail);
+                if (r.Succeeded) success.Add("Email updated.");
+                else errors.AddRange(r.Errors.Select(e => e.Description));
+            }
+
+            // 5. Address
+            if (newAddress != null && newAddress != user.Address)
+            {
+                user.Address = newAddress;
+                var r = await _userManager.UpdateAsync(user);
+                if (r.Succeeded) success.Add("Address updated.");
+                else errors.AddRange(r.Errors.Select(e => e.Description));
+            }
+
+            // 6. Password
+            if (!string.IsNullOrWhiteSpace(newPassword))
+            {
+                if (string.IsNullOrWhiteSpace(currentPassword))
+                    errors.Add("Current password is required to set a new password.");
+                else if (newPassword != confirmPassword)
+                    errors.Add("New passwords do not match.");
+                else
+                {
+                    var r = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+                    if (r.Succeeded)
+                    {
+                        await _signInManager.RefreshSignInAsync(user);
+                        success.Add("Password updated.");
+                    }
+                    else errors.AddRange(r.Errors.Select(e => e.Description));
+                }
+            }
+
+            if (success.Any()) await _signInManager.RefreshSignInAsync(user);
+
+            TempData["ProfileSuccess"] = success.Any() ? string.Join(" ", success) : null;
+            TempData["ProfileErrors"]  = errors.Any()  ? string.Join(" ", errors)  : null;
+
+            return RedirectToAction("Profile", new { section = "account" });
         }
     }
 }
